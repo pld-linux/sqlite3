@@ -10,7 +10,7 @@ Release:	1
 License:	LGPL
 Group:		Libraries
 # Source0Download: http://sqlite.org/download.html
-Source0:	http://sqlite.org/%{name}-%{version}.tar.gz
+Source0:	http://sqlite.org/sqlite-%{version}.tar.gz
 # Source0-md5:	b7dff1ec9bf4d08928c039b278630ba7
 URL:		http://sqlite.org/
 BuildRequires:	autoconf
@@ -118,7 +118,7 @@ bazami danych.
 Pakiet zawiera statyczne biblioteki SQLite.
 
 %prep
-%setup -q -n %{name}
+%setup -q -n sqlite
 sed -i 's/mkdir doc/#mkdir doc/' Makefile*
 
 %build
