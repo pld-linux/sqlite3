@@ -18,6 +18,7 @@ BuildRequires:	automake
 BuildRequires:	libtool
 BuildRequires:	readline-devel
 BuildRequires:	tcl-devel
+Provides:	sqlite = %{version}
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -49,6 +50,7 @@ bazami danych.
 Summary:	Header files for SQLite development
 Summary(pl):	Pliki nag³ówkowe SQLite
 Group:		Development/Libraries
+Provides:	sqlite-devel = %{version}
 Requires:	%{name} = %{version}-%{release}
 
 %description devel
@@ -86,6 +88,7 @@ u¿ywaj±cych biblioteki SQLite.
 Summary:	Static libraries for SQLite development
 Summary(pl):	Statyczne biblioteki SQLite
 Group:		Development/Libraries
+Provides:	sqlite-static = %{version}
 Requires:	%{name}-devel = %{version}-%{release}
 
 %description static
