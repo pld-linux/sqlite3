@@ -1,3 +1,5 @@
+# TODO:
+# - fix lib64 in tcl module
 #
 # Conditional build:
 %bcond_without	tests # don't run tests
@@ -5,13 +7,13 @@
 Summary:	SQLite library
 Summary(pl):	Biblioteka SQLite
 Name:		sqlite3
-Version:	3.0.8
-Release:	3
+Version:	3.2.2
+Release:	1
 License:	LGPL
 Group:		Libraries
 # Source0Download: http://sqlite.org/download.html
 Source0:	http://sqlite.org/sqlite-%{version}.tar.gz
-# Source0-md5:	b7dff1ec9bf4d08928c039b278630ba7
+# Source0-md5:	802f19e1f0eba56f3f1be8c6491c8a55
 URL:		http://sqlite.org/
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -19,6 +21,8 @@ BuildRequires:	libtool
 BuildRequires:	readline-devel
 BuildRequires:	tcl-devel
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
+
+%define         _ulibdir        /usr/lib
 
 %description
 SQLite is a C library that implements an SQL database engine. A large
@@ -117,8 +121,19 @@ bazami danych.
 
 Pakiet zawiera statyczne biblioteki SQLite.
 
+%package -n tcl-%{name}
+Summary:        sqlite3 tcl extension
+Summary(pl):    Rozszerzenie sqlite3 dla Tcl
+Group:          Development/Languages/Tcl
+
+%description -n tcl-%{name}
+sqlite3 tcl extension.
+
+%description -l pl -n tcl-%{name}
+Rozszerzenie sqlite3 dla Tcl.
+
 %prep
-%setup -q -n sqlite
+%setup -q -n sqlite-%{version}
 sed -i 's/mkdir doc/#mkdir doc/' Makefile*
 
 %build
@@ -127,6 +142,7 @@ cp -f /usr/share/automake/config.sub .
 %{__aclocal}
 %{__autoconf}
 %configure \
+	--with-tcl=%{_ulibdir} \
 	--enable-threadsafe
 %{__make}
 %{__make} doc
@@ -140,7 +156,7 @@ install -d $RPM_BUILD_ROOT{%{_bindir},%{_includedir},%{_libdir},%{_mandir}/man1}
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
 
-install sqlite.1 $RPM_BUILD_ROOT%{_mandir}/man1
+install sqlite3.1 $RPM_BUILD_ROOT%{_mandir}/man1
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -153,7 +169,7 @@ rm -rf $RPM_BUILD_ROOT
 %doc README
 %attr(755,root,root) %{_bindir}/sqlite3
 %attr(755,root,root) %{_libdir}/lib*.so.*.*
-%{_mandir}/man1/sqlite.1*
+%{_mandir}/man1/sqlite3.1*
 
 %files devel
 %defattr(644,root,root,755)
@@ -166,3 +182,9 @@ rm -rf $RPM_BUILD_ROOT
 %files static
 %defattr(644,root,root,755)
 %{_libdir}/lib*.a
+
+%files -n tcl-%{name}
+%defattr(644,root,root,755)
+%dir %{_ulibdir}/tcl*/sqlite3
+%attr(755,root,root) %{_ulibdir}/tcl*/sqlite3/*.so
+%{_ulibdir}/tcl*/sqlite3/*.tcl
