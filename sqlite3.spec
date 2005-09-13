@@ -7,13 +7,13 @@
 Summary:	SQLite library
 Summary(pl):	Biblioteka SQLite
 Name:		sqlite3
-Version:	3.2.2
-Release:	2
+Version:	3.2.5
+Release:	1
 License:	LGPL
 Group:		Libraries
 # Source0Download: http://sqlite.org/download.html
 Source0:	http://sqlite.org/sqlite-%{version}.tar.gz
-# Source0-md5:	802f19e1f0eba56f3f1be8c6491c8a55
+# Source0-md5:	0f07cfd8591c3fcae159f0c69bf2436f
 URL:		http://sqlite.org/
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -151,7 +151,7 @@ cp -f /usr/share/automake/config.sub .
 %{__make}
 %{__make} doc
 
-%{?with_tests:%{__make} test}
+%{?with_tests:LC_ALL=C %{__make} test}
 
 %install
 rm -rf $RPM_BUILD_ROOT
