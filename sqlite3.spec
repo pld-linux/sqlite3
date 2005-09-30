@@ -3,12 +3,14 @@
 #
 # Conditional build:
 %bcond_without	tests # don't run tests
+%bcond_without	tcl   # disable tcl extension
+%bcond_without	docs  # disable documentation building
 #
 Summary:	SQLite library
 Summary(pl):	Biblioteka SQLite
 Name:		sqlite3
 Version:	3.2.7
-Release:	1
+Release:	2
 License:	LGPL
 Group:		Libraries
 # Source0Download: http://sqlite.org/download.html
@@ -20,7 +22,7 @@ BuildRequires:	autoconf
 BuildRequires:	automake
 BuildRequires:	libtool
 BuildRequires:	readline-devel
-BuildRequires:	tcl-devel
+%{?with_tcl:BuildRequires:	tcl-devel}
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %ifarch alpha %{x8664}
@@ -148,10 +150,14 @@ cp -f /usr/share/automake/config.sub .
 %{__aclocal}
 %{__autoconf}
 %configure \
-	--with-tcl=%{_ulibdir} \
+	%{?with_tcl:--with-tcl=%{_ulibdir}} \
+	%{!?with_tcl:--disable-tcl} \
 	--enable-threadsafe
 %{__make}
+
+%if %{with docs}
 %{__make} doc
+%endif
 
 %{?with_tests:LC_ALL=C %{__make} test}
 
@@ -189,8 +195,10 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %{_libdir}/lib*.a
 
+%if %{with tcl}
 %files -n tcl-%{name}
 %defattr(644,root,root,755)
 %dir %{_ulibdir}/tcl*/sqlite3
 %attr(755,root,root) %{_ulibdir}/tcl*/sqlite3/*.so
 %{_ulibdir}/tcl*/sqlite3/*.tcl
+%endif
