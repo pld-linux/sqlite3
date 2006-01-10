@@ -1,5 +1,7 @@
 # TODO:
 # - fix lib64 in tcl module
+# - date test fail on tcl8.5 because of missing tcl library initialization
+#   (and thus unavailable clock command)
 #
 # Conditional build:
 %bcond_without	tests # don't run tests
