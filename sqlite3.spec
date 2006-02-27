@@ -19,6 +19,7 @@ Group:		Libraries
 Source0:	http://sqlite.org/sqlite-%{version}.tar.gz
 # Source0-md5:	e31b390c294c0ea093f0bed3353fdff2
 Patch0:		%{name}-sign-function.patch
+Patch1:		%{name}-pkgconfig.patch
 URL:		http://sqlite.org/
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -150,6 +151,8 @@ Rozszerzenie sqlite3 dla Tcl.
 %prep
 %setup -q -n sqlite-%{version}
 %patch0 -p1
+%patch1 -p1
+
 sed -i 's/mkdir doc/#mkdir doc/' Makefile*
 
 %build
