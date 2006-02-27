@@ -1,0 +1,10 @@
+--- sqlite-3.3.4/sqlite3.pc.in.orig	2006-02-27 18:52:06.090877500 +0100
++++ sqlite-3.3.4/sqlite3.pc.in	2006-02-27 18:52:20.243762000 +0100
+@@ -7,6 +7,6 @@
+ 
+ Name: SQLite
+ Description: SQL database engine
+-Version: @VERSION@
++Version: @RELEASE@
+ Libs: -L${libdir} -lsqlite3
+ Cflags: -I${includedir}
