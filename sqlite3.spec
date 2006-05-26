@@ -145,7 +145,7 @@ Group:          Development/Languages/Tcl
 %description -n tcl-%{name}
 sqlite3 tcl extension.
 
-%description -l pl -n tcl-%{name}
+%description -n tcl-%{name} -l pl
 Rozszerzenie sqlite3 dla Tcl.
 
 %prep
