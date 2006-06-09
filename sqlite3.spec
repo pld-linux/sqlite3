@@ -138,9 +138,9 @@ bazami danych.
 Pakiet zawiera statyczne biblioteki SQLite.
 
 %package -n tcl-%{name}
-Summary:        sqlite3 tcl extension
-Summary(pl):    Rozszerzenie sqlite3 dla Tcl
-Group:          Development/Languages/Tcl
+Summary:	sqlite3 tcl extension
+Summary(pl):	Rozszerzenie sqlite3 dla Tcl
+Group:		Development/Languages/Tcl
 
 %description -n tcl-%{name}
 sqlite3 tcl extension.
