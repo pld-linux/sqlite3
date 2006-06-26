@@ -11,13 +11,13 @@
 Summary:	SQLite library
 Summary(pl):	Biblioteka SQLite
 Name:		sqlite3
-Version:	3.3.5
+Version:	3.3.6
 Release:	1
 License:	LGPL
 Group:		Libraries
 # Source0Download: http://sqlite.org/download.html
 Source0:	http://sqlite.org/sqlite-%{version}.tar.gz
-# Source0-md5:	dd2a7b6f2a07a4403a0b5e17e8ed5b88
+# Source0-md5:	a2cb1fafad5c2587e513dcbd18ace097
 Patch0:		%{name}-sign-function.patch
 Patch1:		%{name}-pkgconfig.patch
 URL:		http://sqlite.org/
