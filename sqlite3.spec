@@ -34,7 +34,7 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 # disabling tcl currently breaks making test target,
 # some hack in Makefile needs to be done
-%if %{without tcl}
+%if !%{with tcl}
 %undefine	with_tests
 %endif
 
