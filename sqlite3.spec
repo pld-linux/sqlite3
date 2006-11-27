@@ -1,5 +1,6 @@
 # TODO:
 # - fix lib64 in tcl module
+# - tcl is more broken: WARNING: couldn't load file "/tmp/B.c9eef4/sqlite3-3.2.8-root-builder/usr/lib/tcl8.4/sqlite3/libtclsqlite3.so": /tmp/B.c9eef4/sqlite3-3.2.8-root-builder/usr/lib/tcl8.4/sqlite3/libtclsqlite3.so: cannot open shared object file: No such file or directory
 # - date test fail on tcl8.5 because of missing tcl library initialization
 #   (and thus unavailable clock command)
 #
