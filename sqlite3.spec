@@ -1,6 +1,5 @@
 # TODO:
 # - fix lib64 in tcl module
-# - tcl is more broken: WARNING: couldn't load file "/tmp/B.c9eef4/sqlite3-3.2.8-root-builder/usr/lib/tcl8.4/sqlite3/libtclsqlite3.so": /tmp/B.c9eef4/sqlite3-3.2.8-root-builder/usr/lib/tcl8.4/sqlite3/libtclsqlite3.so: cannot open shared object file: No such file or directory
 # - date test fail on tcl8.5 because of missing tcl library initialization
 #   (and thus unavailable clock command)
 #
@@ -13,7 +12,7 @@ Summary:	SQLite library
 Summary(pl):	Biblioteka SQLite
 Name:		sqlite3
 Version:	3.3.8
-Release:	1
+Release:	2
 License:	LGPL
 Group:		Libraries
 # Source0Download: http://sqlite.org/download.html
@@ -179,6 +178,8 @@ install -d $RPM_BUILD_ROOT{%{_bindir},%{_includedir},%{_libdir},%{_mandir}/man1}
 
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
+
+sed -i -e "s#$RPM_BUILD_ROOT##g" $RPM_BUILD_ROOT%{_ulibdir}/tcl*/sqlite3/*.tcl
 
 install sqlite3.1 $RPM_BUILD_ROOT%{_mandir}/man1
 
