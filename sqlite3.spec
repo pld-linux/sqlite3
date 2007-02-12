@@ -9,7 +9,7 @@
 %bcond_without	docs  # disable documentation building
 #
 Summary:	SQLite library
-Summary(pl):	Biblioteka SQLite
+Summary(pl.UTF-8):   Biblioteka SQLite
 Name:		sqlite3
 Version:	3.3.10
 Release:	1
@@ -53,21 +53,21 @@ addition to the C library, the SQLite distribution includes a
 command-line tool for interacting with SQLite databases and SQLite
 bindings for Tcl/Tk.
 
-%description -l pl
-SQLite jest bibliotek± jêzyka C, która implementuje silnik baz danych
-SQL (obs³ugiwana jest wiêkszo¶æ standardu SQL92). Ca³a baza danych
-przechowywana jest w jednym pliku. Aplikacje wykorzystuj±ce tê
-bibliotekê charakteryzuj± siê si³± i elastyczno¶ci± SQLowych baz
-danych bez konieczno¶ci utrzymywania osobnego serwera baz danych.
-Poniewa¿ pomijana jest komunikacja klient-serwer i dane s± zapisywane
-bezpo¶rednio na dysku, SQLite jest szybsza od du¿ych serwerów
-bazodanowych przy wiêkszo¶ci operacji na bazie danych. Dodatkowo
-oprócz biblioteki jêzyka C, dostarczany jest program do zarz±dzania
+%description -l pl.UTF-8
+SQLite jest bibliotekÄ… jÄ™zyka C, ktÃ³ra implementuje silnik baz danych
+SQL (obsÅ‚ugiwana jest wiÄ™kszoÅ›Ä‡ standardu SQL92). CaÅ‚a baza danych
+przechowywana jest w jednym pliku. Aplikacje wykorzystujÄ…ce tÄ™
+bibliotekÄ™ charakteryzujÄ… siÄ™ siÅ‚Ä… i elastycznoÅ›ciÄ… SQLowych baz
+danych bez koniecznoÅ›ci utrzymywania osobnego serwera baz danych.
+PoniewaÅ¼ pomijana jest komunikacja klient-serwer i dane sÄ… zapisywane
+bezpoÅ›rednio na dysku, SQLite jest szybsza od duÅ¼ych serwerÃ³w
+bazodanowych przy wiÄ™kszoÅ›ci operacji na bazie danych. Dodatkowo
+oprÃ³cz biblioteki jÄ™zyka C, dostarczany jest program do zarzÄ…dzania
 bazami danych.
 
 %package devel
 Summary:	Header files for SQLite development
-Summary(pl):	Pliki nag³ówkowe SQLite
+Summary(pl.UTF-8):   Pliki nagÅ‚Ã³wkowe SQLite
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
 
@@ -87,24 +87,24 @@ bindings for Tcl/Tk.
 This package contains the header files needed to develop programs that
 use these SQLite.
 
-%description devel -l pl
-SQLite jest bibliotek± jêzyka C, która implementuje silnik baz danych
-SQL (obs³ugiwana jest wiêkszo¶æ standardu SQL92). Ca³a baza danych
-przechowywana jest w jednym pliku. Aplikacje wykorzystuj±ce tê
-bibliotekê charakteryzuj± siê si³± i elastyczno¶ci± SQLowych baz
-danych bez konieczno¶ci utrzymywania osobnego serwera baz danych.
-Poniewa¿ pomijana jest komunikacja klient-serwer i dane s± zapisywane
-bezpo¶rednio na dysku, SQLite jest szybsza od du¿ych serwerów
-bazodanowych przy wiêkszo¶ci operacji na bazie danych. Dodatkowo
-oprócz biblioteki jêzyka C, dostarczany jest program do zarz±dzania
+%description devel -l pl.UTF-8
+SQLite jest bibliotekÄ… jÄ™zyka C, ktÃ³ra implementuje silnik baz danych
+SQL (obsÅ‚ugiwana jest wiÄ™kszoÅ›Ä‡ standardu SQL92). CaÅ‚a baza danych
+przechowywana jest w jednym pliku. Aplikacje wykorzystujÄ…ce tÄ™
+bibliotekÄ™ charakteryzujÄ… siÄ™ siÅ‚Ä… i elastycznoÅ›ciÄ… SQLowych baz
+danych bez koniecznoÅ›ci utrzymywania osobnego serwera baz danych.
+PoniewaÅ¼ pomijana jest komunikacja klient-serwer i dane sÄ… zapisywane
+bezpoÅ›rednio na dysku, SQLite jest szybsza od duÅ¼ych serwerÃ³w
+bazodanowych przy wiÄ™kszoÅ›ci operacji na bazie danych. Dodatkowo
+oprÃ³cz biblioteki jÄ™zyka C, dostarczany jest program do zarzÄ…dzania
 bazami danych.
 
-Pakiet zawiera pliki nagówkowe niezbedne do kompilowania programów
-u¿ywaj±cych biblioteki SQLite.
+Pakiet zawiera pliki nagÃ³wkowe niezbedne do kompilowania programÃ³w
+uÅ¼ywajÄ…cych biblioteki SQLite.
 
 %package static
 Summary:	Static libraries for SQLite development
-Summary(pl):	Statyczne biblioteki SQLite
+Summary(pl.UTF-8):   Statyczne biblioteki SQLite
 Group:		Development/Libraries
 Requires:	%{name}-devel = %{version}-%{release}
 
@@ -123,29 +123,29 @@ bindings for Tcl/Tk.
 
 This package contains the static SQLite libraries.
 
-%description static -l pl
-SQLite jest bibliotek± jêzyka C, która implementuje silnik baz danych
-SQL (obs³ugiwana jest wiêkszo¶æ standardu SQL92). Ca³a baza danych
-przechowywana jest w jednym pliku. Aplikacje wykorzystuj±ce tê
-bibliotekê charakteryzuj± siê si³± i elastyczno¶ci± SQLowych baz
-danych bez konieczno¶ci utrzymywania osobnego serwera baz danych.
-Poniewa¿ pomijana jest komunikacja klient-serwer i dane s± zapisywane
-bezpo¶rednio na dysku, SQLite jest szybsza od du¿ych serwerów
-bazodanowych przy wiêkszo¶ci operacji na bazie danych. Dodatkowo
-oprócz biblioteki jêzyka C, dostarczany jest program do zarz±dzania
+%description static -l pl.UTF-8
+SQLite jest bibliotekÄ… jÄ™zyka C, ktÃ³ra implementuje silnik baz danych
+SQL (obsÅ‚ugiwana jest wiÄ™kszoÅ›Ä‡ standardu SQL92). CaÅ‚a baza danych
+przechowywana jest w jednym pliku. Aplikacje wykorzystujÄ…ce tÄ™
+bibliotekÄ™ charakteryzujÄ… siÄ™ siÅ‚Ä… i elastycznoÅ›ciÄ… SQLowych baz
+danych bez koniecznoÅ›ci utrzymywania osobnego serwera baz danych.
+PoniewaÅ¼ pomijana jest komunikacja klient-serwer i dane sÄ… zapisywane
+bezpoÅ›rednio na dysku, SQLite jest szybsza od duÅ¼ych serwerÃ³w
+bazodanowych przy wiÄ™kszoÅ›ci operacji na bazie danych. Dodatkowo
+oprÃ³cz biblioteki jÄ™zyka C, dostarczany jest program do zarzÄ…dzania
 bazami danych.
 
 Pakiet zawiera statyczne biblioteki SQLite.
 
 %package -n tcl-%{name}
 Summary:	sqlite3 tcl extension
-Summary(pl):	Rozszerzenie sqlite3 dla Tcl
+Summary(pl.UTF-8):   Rozszerzenie sqlite3 dla Tcl
 Group:		Development/Languages/Tcl
 
 %description -n tcl-%{name}
 sqlite3 tcl extension.
 
-%description -n tcl-%{name} -l pl
+%description -n tcl-%{name} -l pl.UTF-8
 Rozszerzenie sqlite3 dla Tcl.
 
 %prep
