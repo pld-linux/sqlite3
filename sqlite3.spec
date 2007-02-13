@@ -9,7 +9,7 @@
 %bcond_without	docs  # disable documentation building
 #
 Summary:	SQLite library
-Summary(pl.UTF-8):   Biblioteka SQLite
+Summary(pl.UTF-8):	Biblioteka SQLite
 Name:		sqlite3
 Version:	3.3.10
 Release:	1
@@ -67,7 +67,7 @@ bazami danych.
 
 %package devel
 Summary:	Header files for SQLite development
-Summary(pl.UTF-8):   Pliki nagłówkowe SQLite
+Summary(pl.UTF-8):	Pliki nagłówkowe SQLite
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
 
@@ -104,7 +104,7 @@ używających biblioteki SQLite.
 
 %package static
 Summary:	Static libraries for SQLite development
-Summary(pl.UTF-8):   Statyczne biblioteki SQLite
+Summary(pl.UTF-8):	Statyczne biblioteki SQLite
 Group:		Development/Libraries
 Requires:	%{name}-devel = %{version}-%{release}
 
@@ -139,7 +139,7 @@ Pakiet zawiera statyczne biblioteki SQLite.
 
 %package -n tcl-%{name}
 Summary:	sqlite3 tcl extension
-Summary(pl.UTF-8):   Rozszerzenie sqlite3 dla Tcl
+Summary(pl.UTF-8):	Rozszerzenie sqlite3 dla Tcl
 Group:		Development/Languages/Tcl
 
 %description -n tcl-%{name}
