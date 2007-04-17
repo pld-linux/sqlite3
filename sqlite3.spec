@@ -6,7 +6,7 @@
 # Conditional build:
 %bcond_without	tests # don't run tests
 %bcond_without	tcl   # disable tcl extension
-%bcond_without	docs  # disable documentation building
+%bcond_without	doc  # disable documentation building
 #
 Summary:	SQLite library
 Summary(pl.UTF-8):	Biblioteka SQLite
@@ -166,7 +166,7 @@ cp -f /usr/share/automake/config.sub .
 	--enable-threadsafe
 %{__make}
 
-%if %{with docs}
+%if %{with doc}
 %{__make} doc
 %endif
 
