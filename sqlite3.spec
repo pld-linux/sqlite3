@@ -11,13 +11,13 @@
 Summary:	SQLite library
 Summary(pl.UTF-8):	Biblioteka SQLite
 Name:		sqlite3
-Version:	3.4.1
+Version:	3.4.2
 Release:	1
 License:	LGPL
 Group:		Libraries
 # Source0Download: http://sqlite.org/download.html
 Source0:	http://sqlite.org/sqlite-%{version}.tar.gz
-# Source0-md5:	0f06955b18da295fecb62d4bf9ded3c6
+# Source0-md5:	2feec9b429f9298c9f288420c8b449f8
 Patch0:		%{name}-sign-function.patch
 Patch1:		%{name}-pkgconfig.patch
 URL:		http://sqlite.org/
@@ -179,7 +179,9 @@ install -d $RPM_BUILD_ROOT{%{_bindir},%{_includedir},%{_libdir},%{_mandir}/man1}
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
 
+%if %{with tcl}
 sed -i -e "s#$RPM_BUILD_ROOT##g" $RPM_BUILD_ROOT%{_ulibdir}/tcl*/sqlite3/*.tcl
+%endif
 
 install sqlite3.1 $RPM_BUILD_ROOT%{_mandir}/man1
 
