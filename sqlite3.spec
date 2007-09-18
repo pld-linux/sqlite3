@@ -39,6 +39,7 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 %endif
 
 %define         _ulibdir        /usr/lib
+%define		tclver		%(rpm -q --qf '%{V}' tcl)
 
 %description
 SQLite is a C library that implements an SQL database engine. A large
@@ -177,10 +178,11 @@ rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT{%{_bindir},%{_includedir},%{_libdir},%{_mandir}/man1}
 
 %{__make} install \
-	DESTDIR=$RPM_BUILD_ROOT
+	DESTDIR=$RPM_BUILD_ROOT \
+	TCLLIBDIR=%{_libdir}/tcl%{tclver}
 
 %if %{with tcl}
-sed -i -e "s#$RPM_BUILD_ROOT##g" $RPM_BUILD_ROOT%{_ulibdir}/tcl*/sqlite3/*.tcl
+sed -i -e "s#$RPM_BUILD_ROOT##g" $RPM_BUILD_ROOT%{_libdir}/tcl*/sqlite3/*.tcl
 %endif
 
 install sqlite3.1 $RPM_BUILD_ROOT%{_mandir}/man1
@@ -214,7 +216,7 @@ rm -rf $RPM_BUILD_ROOT
 %if %{with tcl}
 %files -n tcl-%{name}
 %defattr(644,root,root,755)
-%dir %{_ulibdir}/tcl*/sqlite3
-%attr(755,root,root) %{_ulibdir}/tcl*/sqlite3/*.so
-%{_ulibdir}/tcl*/sqlite3/*.tcl
+%dir %{_libdir}/tcl*/sqlite3
+%attr(755,root,root) %{_libdir}/tcl*/sqlite3/*.so
+%{_libdir}/tcl*/sqlite3/*.tcl
 %endif
