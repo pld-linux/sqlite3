@@ -1,18 +1,30 @@
 # TODO:
-# - fix lib64 in tcl module
-# - date test fail on tcl8.5 because of missing tcl library initialization
-#   (and thus unavailable clock command)
+# - some tests fail with tcl8.5, it's tcl fault,
+#	if someone REALLY cares (s)he can look into it
 #
 # Conditional build:
-%bcond_without	tests # don't run tests
-%bcond_without	tcl   # disable tcl extension
-%bcond_without	doc  # disable documentation building
+%bcond_with	tests	# run tests
+%bcond_without	tcl	# disable tcl extension
+%bcond_without	doc	# disable documentation building
 #
+%ifarch alpha sparc %{x8664}
+%undefine	with_tests
+%endif
+
+# disabling tcl currently breaks making test target,
+# some hack in Makefile needs to be done
+%if !%{with tcl}
+%undefine	with_tests
+%endif
+
+%define         _ulibdir        /usr/lib
+%define		tclver		%(rpm -q --qf '%{V}' tcl)
+
 Summary:	SQLite library
 Summary(pl.UTF-8):	Biblioteka SQLite
 Name:		sqlite3
 Version:	3.5.0
-Release:	1
+Release:	2
 License:	LGPL
 Group:		Libraries
 # Source0Download: http://sqlite.org/download.html
@@ -27,19 +39,6 @@ BuildRequires:	libtool
 BuildRequires:	readline-devel
 %{?with_tcl:BuildRequires:	tcl-devel}
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
-
-%ifarch alpha sparc %{x8664}
-%undefine	with_tests
-%endif
-
-# disabling tcl currently breaks making test target,
-# some hack in Makefile needs to be done
-%if !%{with tcl}
-%undefine	with_tests
-%endif
-
-%define         _ulibdir        /usr/lib
-%define		tclver		%(rpm -q --qf '%{V}' tcl)
 
 %description
 SQLite is a C library that implements an SQL database engine. A large
@@ -161,6 +160,8 @@ sed -i 's/mkdir doc/#mkdir doc/' Makefile*
 cp -f /usr/share/automake/config.sub .
 %{__aclocal}
 %{__autoconf}
+CFLAGS="%{rpmcflags} -DSQLITE_ENABLE_COLUMN_METADATA=1"
+export CFLAGS
 %configure \
 	%{?with_tcl:--with-tcl=%{_ulibdir}} \
 	%{!?with_tcl:--disable-tcl} \
