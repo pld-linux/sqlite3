@@ -183,7 +183,7 @@ install -d $RPM_BUILD_ROOT{%{_bindir},%{_includedir},%{_libdir},%{_mandir}/man1}
 	TCLLIBDIR=%{_libdir}/tcl%{tclver}
 
 %if %{with tcl}
-sed -i -e "s#$RPM_BUILD_ROOT##g" $RPM_BUILD_ROOT%{_libdir}/tcl*/sqlite3/*.tcl
+sed -i -e "s#$RPM_BUILD_ROOT##g" $RPM_BUILD_ROOT%{_libdir}/tcl%{tclver}/sqlite3/pkgIndex.tcl
 %endif
 
 install sqlite3.1 $RPM_BUILD_ROOT%{_mandir}/man1
@@ -198,26 +198,27 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %doc README
 %attr(755,root,root) %{_bindir}/sqlite3
-%attr(755,root,root) %{_libdir}/lib*.so.*.*
+%attr(755,root,root) %{_libdir}/libsqlite3.so.*.*.*
+%attr(755,root,root) %ghost %{_libdir}/libsqlite3.so.0
 %{_mandir}/man1/sqlite3.1*
 
 %files devel
 %defattr(644,root,root,755)
-%doc doc/*
-%attr(755,root,root) %{_libdir}/lib*.so
-%{_libdir}/lib*.la
+%doc doc/lemon.html doc/report1.txt
+%attr(755,root,root) %{_libdir}/libsqlite3.so
+%{_libdir}/libsqlite3.la
 %{_includedir}/sqlite3.h
 %{_includedir}/sqlite3ext.h
-%{_pkgconfigdir}/*.pc
+%{_pkgconfigdir}/sqlite3.pc
 
 %files static
 %defattr(644,root,root,755)
-%{_libdir}/lib*.a
+%{_libdir}/libsqlite3.a
 
 %if %{with tcl}
 %files -n tcl-%{name}
 %defattr(644,root,root,755)
 %dir %{_libdir}/tcl*/sqlite3
-%attr(755,root,root) %{_libdir}/tcl*/sqlite3/*.so
-%{_libdir}/tcl*/sqlite3/*.tcl
+%attr(755,root,root) %{_libdir}/tcl%{tclver}/sqlite3/libtclsqlite3.so
+%{_libdir}/tcl%{tclver}/sqlite3/pkgIndex.tcl
 %endif
