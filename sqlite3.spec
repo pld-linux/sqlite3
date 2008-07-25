@@ -1,6 +1,10 @@
 # TODO:
 # - some tests fail with tcl8.5, it's tcl fault,
 #	if someone REALLY cares (s)he can look into it
+# - alpha build fail:
+#   tclsh ./tool/mksqlite3c.tcl
+#   tclsh: allocatestack.c:404: allocate_stack: Assertion `size != 0' failed.
+#   make: *** [sqlite3.c] Aborted
 #
 # Conditional build:
 %bcond_with	tests	# run tests
@@ -17,7 +21,7 @@
 %undefine	with_tests
 %endif
 
-%define         _ulibdir        /usr/lib
+%define		_ulibdir	/usr/lib
 %define		tclver		8.5
 
 Summary:	SQLite library
@@ -27,12 +31,12 @@ Version:	3.5.9
 Release:	1
 License:	LGPL
 Group:		Libraries
-# Source0Download: http://sqlite.org/download.html
-Source0:	http://sqlite.org/sqlite-%{version}.tar.gz
+# Source0Download: http://www.sqlite.org/download.html
+Source0:	http://www.sqlite.org/sqlite-%{version}.tar.gz
 # Source0-md5:	b58412904b42fe49e5a281e99da0fd72
 Patch0:		%{name}-sign-function.patch
 Patch1:		%{name}-pkgconfig.patch
-URL:		http://sqlite.org/
+URL:		http://www.sqlite.org/
 BuildRequires:	autoconf
 BuildRequires:	automake
 BuildRequires:	libtool
