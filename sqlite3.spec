@@ -27,13 +27,13 @@
 Summary:	SQLite library
 Summary(pl.UTF-8):	Biblioteka SQLite
 Name:		sqlite3
-Version:	3.5.9
+Version:	3.6.1
 Release:	1
 License:	LGPL
 Group:		Libraries
 # Source0Download: http://www.sqlite.org/download.html
 Source0:	http://www.sqlite.org/sqlite-%{version}.tar.gz
-# Source0-md5:	b58412904b42fe49e5a281e99da0fd72
+# Source0-md5:	eeef61635d89710bb8d976c2a0b99841
 Patch0:		%{name}-sign-function.patch
 Patch1:		%{name}-pkgconfig.patch
 URL:		http://www.sqlite.org/
@@ -208,7 +208,6 @@ rm -rf $RPM_BUILD_ROOT
 
 %files devel
 %defattr(644,root,root,755)
-%doc doc/lemon.html doc/report1.txt
 %attr(755,root,root) %{_libdir}/libsqlite3.so
 %{_libdir}/libsqlite3.la
 %{_includedir}/sqlite3.h
