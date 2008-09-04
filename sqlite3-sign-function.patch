@@ -34,10 +34,10 @@ diff -uNr sqlite-3.4.1/src/func.c.orig sqlite-3.4.1/src/func.c
  **
  ** substr(x,p1,p2)  returns p2 characters of x[] beginning with p1.
 @@ -1315,6 +1340,7 @@
-     { "length",             1, 0, SQLITE_UTF8,    0, lengthFunc },
-     { "substr",             3, 0, SQLITE_UTF8,    0, substrFunc },
-     { "abs",                1, 0, SQLITE_UTF8,    0, absFunc    },
-+    { "sign",               1, 0, SQLITE_UTF8,    0, signFunc   },
-     { "round",              1, 0, SQLITE_UTF8,    0, roundFunc  },
-     { "round",              2, 0, SQLITE_UTF8,    0, roundFunc  },
-     { "upper",              1, 0, SQLITE_UTF8,    0, upperFunc  },
+   FUNCTION(substr,             2, 0, 0, substrFunc       ),
+   FUNCTION(substr,             3, 0, 0, substrFunc       ),
+   FUNCTION(abs,                1, 0, 0, absFunc          ),
++  FUNCTION(sign,               1, 0, 0, signFunc         ),
+   FUNCTION(round,              1, 0, 0, roundFunc        ),
+   FUNCTION(round,              2, 0, 0, roundFunc        ),
+   FUNCTION(upper,              1, 0, 0, upperFunc        ),
