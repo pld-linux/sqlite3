@@ -157,7 +157,19 @@ Rozszerzenie sqlite3 dla Tcl.
 %patch0 -p1
 %patch1 -p1
 
-sed -i 's/mkdir doc/#mkdir doc/' Makefile*
+%{__sed} -i 's/mkdir doc/#mkdir doc/' Makefile*
+
+%ifarch alpha
+# See also LP#276821
+# wrapper script to reset stack to 8192 as if ran from make it's insanely huge!:
+# stack(kbytes)        18014398509481983
+cat <<'EOF' > tclsh.sh
+#!/bin/sh
+ulimit -s 8192
+exec tclsh "$@"
+EOF
+chmod +x tclsh.sh
+%endif
 
 %build
 %{__libtoolize}
@@ -170,7 +182,10 @@ export CFLAGS
 	%{?with_tcl:--with-tcl=%{_ulibdir}} \
 	%{!?with_tcl:--disable-tcl} \
 	--enable-threadsafe
-%{__make}
+%{__make} \
+%ifarch alpha
+	TCLSH_CMD=./tclsh.sh
+%endif
 
 %if %{with doc}
 %{__make} doc
@@ -183,6 +198,9 @@ rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT{%{_bindir},%{_includedir},%{_libdir},%{_mandir}/man1}
 
 %{__make} install \
+%ifarch alpha
+	TCLSH_CMD=./tclsh.sh \
+%endif
 	DESTDIR=$RPM_BUILD_ROOT \
 	TCLLIBDIR=%{_libdir}/tcl%{tclver}
 
