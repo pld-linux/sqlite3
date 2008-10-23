@@ -27,15 +27,14 @@
 Summary:	SQLite library
 Summary(pl.UTF-8):	Biblioteka SQLite
 Name:		sqlite3
-Version:	3.6.3
+Version:	3.6.4
 Release:	1
 License:	LGPL
 Group:		Libraries
 # Source0Download: http://www.sqlite.org/download.html
 Source0:	http://www.sqlite.org/sqlite-%{version}.tar.gz
-# Source0-md5:	671d2715f33158abc47a7a2ddd6066c5
+# Source0-md5:	b9832cd8734d4568e384e1c60b50c92f
 Patch0:		%{name}-sign-function.patch
-Patch1:		%{name}-pkgconfig.patch
 URL:		http://www.sqlite.org/
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -155,7 +154,6 @@ Rozszerzenie sqlite3 dla Tcl.
 %prep
 %setup -q -n sqlite-%{version}
 %patch0 -p1
-%patch1 -p1
 
 %{__sed} -i 's/mkdir doc/#mkdir doc/' Makefile*
 
