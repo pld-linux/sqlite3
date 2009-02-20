@@ -38,6 +38,6 @@ diff -uNr sqlite-3.4.1/src/func.c.orig sqlite-3.4.1/src/func.c
      FUNCTION(substr,             3, 0, 0, substrFunc       ),
      FUNCTION(abs,                1, 0, 0, absFunc          ),
 +    FUNCTION(sign,               1, 0, 0, signFunc         ),
+ #ifndef SQLITE_OMIT_FLOATING_POINT
      FUNCTION(round,              1, 0, 0, roundFunc        ),
      FUNCTION(round,              2, 0, 0, roundFunc        ),
-     FUNCTION(upper,              1, 0, 0, upperFunc        ),
