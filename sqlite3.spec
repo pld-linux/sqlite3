@@ -8,7 +8,7 @@
 #
 # Conditional build:
 %bcond_with	tests	# run tests
-%bcond_without	tcl	# disable tcl extension
+%bcond_with	tcl	# enable tcl extension
 %bcond_without	doc	# disable documentation building
 #
 %ifarch alpha sparc %{x8664}
@@ -27,13 +27,13 @@
 Summary:	SQLite library
 Summary(pl.UTF-8):	Biblioteka SQLite
 Name:		sqlite3
-Version:	3.6.10
+Version:	3.6.11
 Release:	1
 License:	LGPL
 Group:		Libraries
 # Source0Download: http://www.sqlite.org/download.html
 Source0:	http://www.sqlite.org/sqlite-%{version}.tar.gz
-# Source0-md5:	a03bdc86df4025b6881d58557e4b5bd3
+# Source0-md5:	7ebb099696ab76cc6ff65dd496d17858
 Patch0:		%{name}-sign-function.patch
 URL:		http://www.sqlite.org/
 BuildRequires:	autoconf
