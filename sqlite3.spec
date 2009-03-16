@@ -29,7 +29,7 @@ Summary:	SQLite library
 Summary(pl.UTF-8):	Biblioteka SQLite
 Name:		sqlite3
 Version:	3.6.11
-Release:	2
+Release:	3
 License:	LGPL
 Group:		Libraries
 # Source0Download: http://www.sqlite.org/download.html
