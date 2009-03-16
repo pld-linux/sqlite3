@@ -5,6 +5,7 @@
 #   tclsh ./tool/mksqlite3c.tcl
 #   tclsh: allocatestack.c:404: allocate_stack: Assertion `size != 0' failed.
 #   make: *** [sqlite3.c] Aborted
+# - enable --enable-load-extension?
 #
 # Conditional build:
 %bcond_with	tests	# run tests
