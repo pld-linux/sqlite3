@@ -41,6 +41,7 @@ BuildRequires:	autoconf
 BuildRequires:	automake
 BuildRequires:	libtool
 BuildRequires:	readline-devel
+BuildRequires:	tcl
 %{?with_tcl:BuildRequires:	tcl-devel}
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
