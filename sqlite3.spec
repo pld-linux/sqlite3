@@ -28,13 +28,13 @@
 Summary:	SQLite library
 Summary(pl.UTF-8):	Biblioteka SQLite
 Name:		sqlite3
-Version:	3.6.19
+Version:	3.6.20
 Release:	1
 License:	LGPL
 Group:		Libraries
 # Source0Download: http://www.sqlite.org/download.html
 Source0:	http://www.sqlite.org/sqlite-%{version}.tar.gz
-# Source0-md5:	aa03cc24a52851bb204fc1e489e195e8
+# Source0-md5:	0faf8fc8ccff5297513c6532b2b4ce23
 Patch0:		%{name}-sign-function.patch
 URL:		http://www.sqlite.org/
 BuildRequires:	autoconf
