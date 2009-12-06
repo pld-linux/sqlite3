@@ -1,24 +1,20 @@
 # TODO:
 # - some tests fail with tcl8.5, it's tcl fault,
 #	if someone REALLY cares (s)he can look into it
-# - alpha build fail:
-#   tclsh ./tool/mksqlite3c.tcl
-#   tclsh: allocatestack.c:404: allocate_stack: Assertion `size != 0' failed.
-#   make: *** [sqlite3.c] Aborted
 # - enable --enable-load-extension?
 #
 # Conditional build:
 %bcond_with	tests	# run tests
 %bcond_with	tcl	# enable tcl extension
 %bcond_without	doc	# disable documentation building
-#
+
 %ifarch alpha sparc %{x8664}
 %undefine	with_tests
 %endif
 
 # disabling tcl currently breaks making test target,
 # some hack in Makefile needs to be done
-%if !%{with tcl}
+%if %{without tcl}
 %undefine	with_tests
 %endif
 
@@ -159,18 +155,6 @@ Rozszerzenie sqlite3 dla Tcl.
 
 %{__sed} -i 's/mkdir doc/#mkdir doc/' Makefile*
 
-%ifarch alpha
-# See also LP#276821
-# wrapper script to reset stack to 8192 as if ran from make it's insanely huge!:
-# stack(kbytes)        18014398509481983
-cat <<'EOF' > tclsh.sh
-#!/bin/sh
-ulimit -s 8192
-exec tclsh "$@"
-EOF
-chmod +x tclsh.sh
-%endif
-
 %build
 %{__libtoolize}
 cp -f /usr/share/automake/config.sub .
@@ -182,10 +166,7 @@ export CFLAGS
 	%{?with_tcl:--with-tcl=%{_ulibdir}} \
 	%{!?with_tcl:--disable-tcl} \
 	--enable-threadsafe
-%{__make} \
-%ifarch alpha
-	TCLSH_CMD=./tclsh.sh
-%endif
+%{__make}
 
 %if %{with doc}
 %{__make} doc
@@ -198,9 +179,6 @@ rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT{%{_bindir},%{_includedir},%{_libdir},%{_mandir}/man1}
 
 %{__make} install \
-%ifarch alpha
-	TCLSH_CMD=./tclsh.sh \
-%endif
 	DESTDIR=$RPM_BUILD_ROOT \
 	TCLLIBDIR=%{_libdir}/tcl%{tclver}
 
@@ -208,7 +186,7 @@ install -d $RPM_BUILD_ROOT{%{_bindir},%{_includedir},%{_libdir},%{_mandir}/man1}
 sed -i -e "s#$RPM_BUILD_ROOT##g" $RPM_BUILD_ROOT%{_libdir}/tcl%{tclver}/sqlite3/pkgIndex.tcl
 %endif
 
-install sqlite3.1 $RPM_BUILD_ROOT%{_mandir}/man1
+cp -a sqlite3.1 $RPM_BUILD_ROOT%{_mandir}/man1
 
 %clean
 rm -rf $RPM_BUILD_ROOT
