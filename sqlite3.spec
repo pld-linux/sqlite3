@@ -25,7 +25,7 @@ Summary:	SQLite library
 Summary(pl.UTF-8):	Biblioteka SQLite
 Name:		sqlite3
 Version:	3.6.22
-Release:	1
+Release:	2
 License:	LGPL
 Group:		Libraries
 # Source0Download: http://www.sqlite.org/download.html
@@ -176,7 +176,7 @@ export CFLAGS
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT{%{_bindir},%{_includedir},%{_libdir},%{_mandir}/man1}
+install -d $RPM_BUILD_ROOT{/%{_lib},%{_bindir},%{_includedir},%{_libdir},%{_mandir}/man1}
 
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT \
@@ -185,6 +185,11 @@ install -d $RPM_BUILD_ROOT{%{_bindir},%{_includedir},%{_libdir},%{_mandir}/man1}
 %if %{with tcl}
 sed -i -e "s#$RPM_BUILD_ROOT##g" $RPM_BUILD_ROOT%{_libdir}/tcl%{tclver}/sqlite3/pkgIndex.tcl
 %endif
+
+mv -f $RPM_BUILD_ROOT%{_libdir}/lib*.so.* $RPM_BUILD_ROOT/%{_lib}
+rm -f $RPM_BUILD_ROOT%{_libdir}/lib*.so
+ln -sf /%{_lib}/$(cd $RPM_BUILD_ROOT/%{_lib}; echo lib*.so.*.*) \
+	$RPM_BUILD_ROOT%{_libdir}/libsqlite3.so
 
 cp -a sqlite3.1 $RPM_BUILD_ROOT%{_mandir}/man1
 
@@ -198,8 +203,8 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %doc README
 %attr(755,root,root) %{_bindir}/sqlite3
-%attr(755,root,root) %{_libdir}/libsqlite3.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libsqlite3.so.0
+%attr(755,root,root) /%{_lib}/libsqlite3.so.*.*.*
+%attr(755,root,root) %ghost /%{_lib}/libsqlite3.so.0
 %{_mandir}/man1/sqlite3.1*
 
 %files devel
