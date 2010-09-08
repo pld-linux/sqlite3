@@ -25,7 +25,7 @@ Summary:	SQLite library
 Summary(pl.UTF-8):	Biblioteka SQLite
 Name:		sqlite3
 Version:	3.7.2
-Release:	1
+Release:	2
 License:	LGPL
 Group:		Libraries
 # Source0Download: http://www.sqlite.org/download.html
@@ -160,7 +160,7 @@ Rozszerzenie sqlite3 dla Tcl.
 cp -f /usr/share/automake/config.sub .
 %{__aclocal}
 %{__autoconf}
-CFLAGS="%{rpmcflags} -DSQLITE_ENABLE_COLUMN_METADATA=1 -DSQLITE_DISABLE_DIRSYNC=1 -DSQLITE_ENABLE_FTS3=3 -DSQLITE_ENABLE_RTREE=1"
+CFLAGS="%{rpmcflags} -DSQLITE_ENABLE_COLUMN_METADATA=1 -DSQLITE_DISABLE_DIRSYNC=1 -DSQLITE_ENABLE_FTS3=3 -DSQLITE_ENABLE_RTREE=1 -DSQLITE_SECURE_DELETE"
 export CFLAGS
 %configure \
 	%{?with_tcl:--with-tcl=%{_ulibdir}} \
