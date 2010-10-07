@@ -7,6 +7,8 @@
 %bcond_with	tests	# run tests
 %bcond_with	tcl	# enable tcl extension
 %bcond_without	doc	# disable documentation building
+%bcond_with	unlock_notify	# enable unlock notify api
+%bcond_with	load_extension	# enable load extension api
 
 %ifarch alpha sparc %{x8664}
 %undefine	with_tests
@@ -37,6 +39,7 @@ BuildRequires:	autoconf
 BuildRequires:	automake
 BuildRequires:	libtool
 BuildRequires:	readline-devel
+%{?with_load_extension:BuildRequires:	sed >= 4.0}
 BuildRequires:	tcl
 %{?with_tcl:BuildRequires:	tcl-devel}
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -160,12 +163,17 @@ Rozszerzenie sqlite3 dla Tcl.
 cp -f /usr/share/automake/config.sub .
 %{__aclocal}
 %{__autoconf}
-CFLAGS="%{rpmcflags} -DSQLITE_ENABLE_COLUMN_METADATA=1 -DSQLITE_DISABLE_DIRSYNC=1 -DSQLITE_ENABLE_FTS3=3 -DSQLITE_ENABLE_RTREE=1 -DSQLITE_SECURE_DELETE"
+CFLAGS="%{rpmcflags} -DSQLITE_ENABLE_COLUMN_METADATA=1 -DSQLITE_DISABLE_DIRSYNC=1 -DSQLITE_ENABLE_FTS3=3 -DSQLITE_ENABLE_RTREE=1 -DSQLITE_SECURE_DELETE %{?with_unlock_notify:-DSQLITE_ENABLE_UNLOCK_NOTIFY}"
 export CFLAGS
+%if %{with load_extension}
+LIBS=-ldl
+export LIBS
+%endif
 %configure \
 	%{?with_tcl:--with-tcl=%{_ulibdir}} \
 	%{!?with_tcl:--disable-tcl} \
 	--enable-threadsafe
+%{?with_load_extension:sed -i~ s/-DSQLITE_OMIT_LOAD_EXTENSION=1// Makefile}
 %{__make}
 
 %if %{with doc}
