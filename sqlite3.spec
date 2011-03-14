@@ -20,19 +20,22 @@
 %undefine	with_tests
 %endif
 
+%define		realver		3070500
+%define		srcver		src
+%define		rpmver		%(echo %{realver}|sed -e "s/00//g" -e "s/0/./g")
 %define		_ulibdir	/usr/lib
 %define		tclver		8.5
 
 Summary:	SQLite library
 Summary(pl.UTF-8):	Biblioteka SQLite
 Name:		sqlite3
-Version:	3.7.3
+Version:	3.7.5
 Release:	1
 License:	LGPL
 Group:		Libraries
 # Source0Download: http://www.sqlite.org/download.html
-Source0:	http://www.sqlite.org/sqlite-%{version}.tar.gz
-# Source0-md5:	5437978aae90350cf984993091e0d695
+Source0:	http://www.sqlite.org/sqlite-%{srcver}-%{realver}.zip
+# Source0-md5:	d61d784997d42cd0d92bac7994094c56
 Patch0:		%{name}-sign-function.patch
 URL:		http://www.sqlite.org/
 BuildRequires:	autoconf
@@ -42,6 +45,7 @@ BuildRequires:	readline-devel
 %{?with_load_extension:BuildRequires:	sed >= 4.0}
 BuildRequires:	tcl
 %{?with_tcl:BuildRequires:	tcl-devel}
+BuildRequires:	unzip
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -153,7 +157,7 @@ sqlite3 tcl extension.
 Rozszerzenie sqlite3 dla Tcl.
 
 %prep
-%setup -q -n sqlite-%{version}
+%setup -q -n sqlite-%{srcver}-%{realver}
 %patch0 -p1
 
 %{__sed} -i 's/mkdir doc/#mkdir doc/' Makefile*
