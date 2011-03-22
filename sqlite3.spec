@@ -7,7 +7,7 @@
 %bcond_with	tests	# run tests
 %bcond_with	tcl	# enable tcl extension
 %bcond_without	doc	# disable documentation building
-%bcond_with	unlock_notify	# enable unlock notify api
+%bcond_without	unlock_notify	# enable unlock notify api
 %bcond_with	load_extension	# enable load extension api
 
 %ifarch alpha sparc %{x8664}
@@ -30,7 +30,7 @@ Summary:	SQLite library
 Summary(pl.UTF-8):	Biblioteka SQLite
 Name:		sqlite3
 Version:	3.7.5
-Release:	1
+Release:	2
 License:	LGPL
 Group:		Libraries
 # Source0Download: http://www.sqlite.org/download.html
