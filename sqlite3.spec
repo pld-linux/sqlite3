@@ -4,11 +4,11 @@
 # - enable --enable-load-extension?
 #
 # Conditional build:
-%bcond_with	tests	# run tests
-%bcond_with	tcl	# enable tcl extension
-%bcond_without	doc	# disable documentation building
-%bcond_without	unlock_notify	# enable unlock notify api
-%bcond_with	load_extension	# enable load extension api
+%bcond_with	tests		# run tests
+%bcond_with	tcl		# enable tcl extension
+%bcond_without	doc		# disable documentation building
+%bcond_without	unlock_notify	# disable unlock notify API
+%bcond_with	load_extension	# enable load extension API
 
 %ifarch alpha sparc %{x8664}
 %undefine	with_tests
