@@ -38,6 +38,8 @@ Source0:	http://www.sqlite.org/sqlite-%{srcver}-%{realver}.zip
 # Source0-md5:	d61d784997d42cd0d92bac7994094c56
 Patch0:		%{name}-sign-function.patch
 URL:		http://www.sqlite.org/
+%{?with_load_extension:Provides:	%{name}(load_extension)}
+%{?with_unlock_notify:Provides:	%{name}(unlock_notify)}
 BuildRequires:	autoconf
 BuildRequires:	automake
 BuildRequires:	libtool
@@ -78,6 +80,14 @@ Summary:	Header files for SQLite development
 Summary(pl.UTF-8):	Pliki nagłówkowe SQLite
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
+%if %{with unlock_notify}
+Requires:	%{name}(unlock_notify)
+Provides:	%{name}-devel(unlock_notify)
+%endif
+%if %{with load_extension}
+Requires:	%{name}(load_extension)
+Provides:	%{name}-devel(load_extension)
+%endif
 
 %description devel
 SQLite is a C library that implements an SQL database engine. A large
@@ -115,6 +125,14 @@ Summary:	Static libraries for SQLite development
 Summary(pl.UTF-8):	Statyczne biblioteki SQLite
 Group:		Development/Libraries
 Requires:	%{name}-devel = %{version}-%{release}
+%if %{with unclock_notify}
+Requires:	%{name}-devel(unlock_notify)
+Provides:	%{name}-static(unlock_notify)
+%endif
+%if %{with load_extension}
+Requires:	%{name}-devel(load_extension)
+Provides:	%{name}-static(load_extension)
+%endif
 
 %description static
 SQLite is a C library that implements an SQL database engine. A large
