@@ -5,7 +5,7 @@
 #
 # Conditional build:
 %bcond_with	tests		# run tests
-%bcond_with	tcl		# enable tcl extension
+%bcond_without	tcl		# Tcl extension
 %bcond_without	doc		# disable documentation building
 %bcond_without	unlock_notify	# disable unlock notify API
 %bcond_with	load_extension	# enable load extension API
@@ -31,7 +31,7 @@ Summary(pl.UTF-8):	Biblioteka SQLite
 Name:		sqlite3
 Version:	3.7.6.3
 Release:	1
-License:	LGPL
+License:	Public Domain
 Group:		Libraries
 # Source0Download: http://www.sqlite.org/download.html
 Source0:	http://www.sqlite.org/sqlite-%{srcver}-%{realver}.zip
@@ -40,7 +40,7 @@ Patch0:		%{name}-sign-function.patch
 URL:		http://www.sqlite.org/
 %{?with_load_extension:Provides:	%{name}(load_extension)}
 %{?with_unlock_notify:Provides:	%{name}(unlock_notify)}
-BuildRequires:	autoconf
+BuildRequires:	autoconf >= 2.50
 BuildRequires:	automake
 BuildRequires:	libtool
 BuildRequires:	readline-devel
@@ -209,15 +209,10 @@ rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT{/%{_lib},%{_bindir},%{_includedir},%{_libdir},%{_mandir}/man1}
 
 %{__make} install \
-	DESTDIR=$RPM_BUILD_ROOT \
-	TCLLIBDIR=%{_libdir}/tcl%{tclver}
-
-%if %{with tcl}
-sed -i -e "s#$RPM_BUILD_ROOT##g" $RPM_BUILD_ROOT%{_libdir}/tcl%{tclver}/sqlite3/pkgIndex.tcl
-%endif
+	DESTDIR=$RPM_BUILD_ROOT
 
 mv -f $RPM_BUILD_ROOT%{_libdir}/lib*.so.* $RPM_BUILD_ROOT/%{_lib}
-rm -f $RPM_BUILD_ROOT%{_libdir}/lib*.so
+%{__rm} $RPM_BUILD_ROOT%{_libdir}/lib*.so
 ln -sf /%{_lib}/$(cd $RPM_BUILD_ROOT/%{_lib}; echo lib*.so.*.*) \
 	$RPM_BUILD_ROOT%{_libdir}/libsqlite3.so
 
