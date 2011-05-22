@@ -30,7 +30,7 @@ Summary:	SQLite library
 Summary(pl.UTF-8):	Biblioteka SQLite
 Name:		sqlite3
 Version:	3.7.6.3
-Release:	1
+Release:	2
 License:	Public Domain
 Group:		Libraries
 # Source0Download: http://www.sqlite.org/download.html
@@ -190,6 +190,9 @@ export CFLAGS
 %if %{with load_extension}
 LIBS=-ldl
 export LIBS
+%endif
+%if %{with tcl}
+export TCLLIBDIR="%{tcl_sitearch}/sqlite3"
 %endif
 %configure \
 	%{?with_tcl:--with-tcl=%{_ulibdir}} \
