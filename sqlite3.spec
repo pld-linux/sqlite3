@@ -20,7 +20,7 @@
 %undefine	with_tests
 %endif
 
-%define		realver		3070900
+%define		realver		3071000
 %define		srcver		src
 %define		rpmver		%(echo %{realver}|sed -e "s/00//g" -e "s/0/./g")
 %define		_ulibdir	/usr/lib
@@ -29,13 +29,13 @@
 Summary:	SQLite library
 Summary(pl.UTF-8):	Biblioteka SQLite
 Name:		sqlite3
-Version:	3.7.9
+Version:	3.7.10
 Release:	1
 License:	Public Domain
 Group:		Libraries
 # Source0Download: http://www.sqlite.org/download.html
 Source0:	http://www.sqlite.org/sqlite-%{srcver}-%{realver}.zip
-# Source0-md5:	b2646c5a0c0b5bc6b8f0b67fc318bab3
+# Source0-md5:	16da2e08ce2233556965cdf20d614bd9
 Patch0:		%{name}-sign-function.patch
 URL:		http://www.sqlite.org/
 %{?with_load_extension:Provides:	%{name}(load_extension)}
