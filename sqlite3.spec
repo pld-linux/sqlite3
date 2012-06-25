@@ -20,7 +20,8 @@
 %undefine	with_tests
 %endif
 
-%define		version_num %(echo %{version} |  awk -F. '{printf("%d%02d%02d%02d", $1, $2, $3, $4)}')
+#define		version_num %(echo %{version} |  awk -F. '{printf("%d%02d%02d%02d", $1, $2, $3, $4)}')
+%define		version_num 3071300
 %define		_ulibdir	/usr/lib
 %define		tclver		8.5
 
