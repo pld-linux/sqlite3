@@ -1,14 +1,13 @@
 # TODO:
 # - some tests fail with tcl8.5, it's tcl fault,
 #	if someone REALLY cares (s)he can look into it
-# - enable --enable-load-extension?
 #
 # Conditional build:
 %bcond_with	tests		# run tests
 %bcond_without	tcl		# Tcl extension
 %bcond_without	doc		# disable documentation building
 %bcond_without	unlock_notify	# disable unlock notify API
-%bcond_with	load_extension	# enable load extension API
+%bcond_without	load_extension	# enable load extension API
 
 %ifarch alpha sparc %{x8664}
 %undefine	with_tests
@@ -29,7 +28,7 @@ Summary:	SQLite library
 Summary(pl.UTF-8):	Biblioteka SQLite
 Name:		sqlite3
 Version:	3.7.13
-Release:	1
+Release:	2
 License:	Public Domain
 Group:		Libraries
 # Source0Download: http://www.sqlite.org/download.html
@@ -196,8 +195,9 @@ export TCLLIBDIR="%{tcl_sitearch}/sqlite3"
 %configure \
 	%{?with_tcl:--with-tcl=%{_ulibdir}} \
 	%{!?with_tcl:--disable-tcl} \
+	%{__enable_disable load_extension load-extension} \
 	--enable-threadsafe
-%{?with_load_extension:sed -i~ s/-DSQLITE_OMIT_LOAD_EXTENSION=1// Makefile}
+
 %{__make}
 
 %if %{with doc}
