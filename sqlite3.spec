@@ -32,7 +32,7 @@ Release:	1
 License:	Public Domain
 Group:		Libraries
 # Source0Download: http://www.sqlite.org/download.html
-Source0:	http://www.sqlite.org/sqlite-src-%{version_num}.zip
+Source0:	http://www.sqlite.org/2013/sqlite-src-%{version_num}.zip
 # Source0-md5:	0d821779acdb56eee1fd71343b41a1cc
 Patch0:		%{name}-sign-function.patch
 URL:		http://www.sqlite.org/
