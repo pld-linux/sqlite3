@@ -8,6 +8,7 @@
 %bcond_without	doc		# disable documentation building
 %bcond_without	unlock_notify	# disable unlock notify API
 %bcond_without	load_extension	# enable load extension API
+%bcond_with		icu		# ICU tokenizer support
 
 %ifarch alpha sparc %{x8664}
 %undefine	with_tests
@@ -38,6 +39,7 @@ Patch0:		%{name}-sign-function.patch
 URL:		http://www.sqlite.org/
 %{?with_load_extension:Provides:	%{name}(load_extension)}
 %{?with_unlock_notify:Provides:	%{name}(unlock_notify)}
+%{?with_icu:Provides:	%{name}(icu)}
 BuildRequires:	autoconf >= 2.50
 BuildRequires:	automake
 BuildRequires:	libtool
@@ -83,6 +85,9 @@ Provides:	%{name}-devel(unlock_notify)
 %endif
 %if %{with load_extension}
 Provides:	%{name}-devel(load_extension)
+%endif
+%if %{with icu}
+Provides:	%{name}-devel(icu)
 %endif
 
 %description devel
@@ -179,18 +184,22 @@ Rozszerzenie sqlite3 dla Tcl.
 cp -f /usr/share/automake/config.sub .
 %{__aclocal}
 %{__autoconf}
-CFLAGS="%{rpmcflags} -DSQLITE_ENABLE_COLUMN_METADATA=1 -DSQLITE_DISABLE_DIRSYNC=1 -DSQLITE_ENABLE_FTS3=3 -DSQLITE_ENABLE_RTREE=1 -DSQLITE_SECURE_DELETE %{?with_unlock_notify:-DSQLITE_ENABLE_UNLOCK_NOTIFY}"
-export CFLAGS
-%if %{with load_extension}
-LIBS=-ldl
-export LIBS
-%endif
+export CFLAGS="%{rpmcflags}
+	-DSQLITE_ENABLE_COLUMN_METADATA=1
+	-DSQLITE_DISABLE_DIRSYNC=1
+	-DSQLITE_ENABLE_FTS3=3
+	-DSQLITE_ENABLE_RTREE=1
+	-DSQLITE_SECURE_DELETE
+	%{?with_unlock_notify:-DSQLITE_ENABLE_UNLOCK_NOTIFY}
+	%{?with_icu:-DSQLITE_ENABLE_ICU}
+"
+export LIBS="%{?with_load_extension:-ldl} %{?with_icu:-licui18n -licuuc}"
 %if %{with tcl}
 export TCLLIBDIR="%{tcl_sitearch}/sqlite3"
 %endif
+
 %configure \
-	%{?with_tcl:--with-tcl=%{_ulibdir}} \
-	%{!?with_tcl:--disable-tcl} \
+	%{!?with_tcl:--disable-tcl}%{?with_tcl:--with-tcl=%{_ulibdir}} \
 	%{__enable_disable load_extension load-extension} \
 	--enable-threadsafe
 
@@ -205,7 +214,6 @@ export TCLLIBDIR="%{tcl_sitearch}/sqlite3"
 %install
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT{/%{_lib},%{_bindir},%{_includedir},%{_libdir},%{_mandir}/man1}
-
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
 
@@ -214,7 +222,7 @@ mv -f $RPM_BUILD_ROOT%{_libdir}/lib*.so.* $RPM_BUILD_ROOT/%{_lib}
 ln -sf /%{_lib}/$(cd $RPM_BUILD_ROOT/%{_lib}; echo lib*.so.*.*) \
 	$RPM_BUILD_ROOT%{_libdir}/libsqlite3.so
 
-cp -a sqlite3.1 $RPM_BUILD_ROOT%{_mandir}/man1
+cp -p sqlite3.1 $RPM_BUILD_ROOT%{_mandir}/man1
 
 %clean
 rm -rf $RPM_BUILD_ROOT
