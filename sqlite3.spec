@@ -29,7 +29,7 @@ Summary:	SQLite library
 Summary(pl.UTF-8):	Biblioteka SQLite
 Name:		sqlite3
 Version:	3.7.16.2
-Release:	1
+Release:	2
 License:	Public Domain
 Group:		Libraries
 # Source0Download: http://www.sqlite.org/download.html
@@ -177,25 +177,58 @@ Rozszerzenie sqlite3 dla Tcl.
 %setup -q -n sqlite-src-%{version_num}
 %patch0 -p1
 
-%{__sed} -i 's/mkdir doc/#mkdir doc/' Makefile*
+%{__sed} -i 's/mkdir doc/#mkdir doc/' Makefile.in
 
 %build
 %{__libtoolize}
 cp -f /usr/share/automake/config.sub .
 %{__aclocal}
 %{__autoconf}
-export CFLAGS="%{rpmcflags}
-	-DSQLITE_ENABLE_COLUMN_METADATA=1
-	-DSQLITE_DISABLE_DIRSYNC=1
-	-DSQLITE_ENABLE_FTS3=3
-	-DSQLITE_ENABLE_RTREE=1
-	-DSQLITE_SECURE_DELETE
-	%{?with_unlock_notify:-DSQLITE_ENABLE_UNLOCK_NOTIFY}
-	%{?with_icu:-DSQLITE_ENABLE_ICU}
-"
-export LIBS="%{?with_load_extension:-ldl} %{?with_icu:-licui18n -licuuc}"
+append-cppflags() {
+	CPPFLAGS="$CPPFLAGS $*"
+}
+append-libs() {
+	LIBS="$LIBS $*"
+}
+export CPPFLAGS="%{rpmcflags}"
+export LIBS
 %if %{with tcl}
 export TCLLIBDIR="%{tcl_sitearch}/sqlite3"
+%endif
+
+append-cppflags -DSQLITE_DISABLE_DIRSYNC=1 -DSQLITE_SECURE_DELETE
+
+# Support column metadata functions.
+# http://sqlite.org/c3ref/column_database_name.html
+# http://sqlite.org/c3ref/table_column_metadata.html
+append-cppflags -DSQLITE_ENABLE_COLUMN_METADATA
+
+# Support Full-Text Search versions 3 and 4.
+# http://sqlite.org/fts3.html
+#append-cppflags -DSQLITE_ENABLE_FTS3 -DSQLITE_ENABLE_FTS3_PARENTHESIS -DSQLITE_ENABLE_FTS4 -DSQLITE_ENABLE_FTS4_UNICODE61
+append-cppflags -DSQLITE_ENABLE_FTS3
+
+# Support R*Trees.
+# http://sqlite.org/rtree.html
+append-cppflags -DSQLITE_ENABLE_RTREE
+
+# Support soundex() function.
+# http://sqlite.org/lang_corefunc.html#soundex
+#append-cppflags -DSQLITE_SOUNDEX
+
+%if %{with unlock_notify}
+# Support unlock notification.
+# http://sqlite.org/unlock_notify.html
+append-cppflags -DSQLITE_ENABLE_UNLOCK_NOTIFY
+%endif
+
+%if %{with icu}
+append-cppflags -DSQLITE_ENABLE_ICU
+append-libs "-licui18n -licuuc"
+%endif
+
+%if %{with load_extension}
+append-libs "-ldl"
 %endif
 
 %configure \
