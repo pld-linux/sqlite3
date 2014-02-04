@@ -21,20 +21,20 @@
 %endif
 
 #define		version_num %(echo %{version} |  awk -F. '{printf("%d%02d%02d%02d", $1, $2, $3, $4)}')
-%define		version_num 3080001
+%define		version_num 3080300
 %define		_ulibdir	/usr/lib
 %define		tclver		8.5
 
 Summary:	SQLite library
 Summary(pl.UTF-8):	Biblioteka SQLite
 Name:		sqlite3
-Version:	3.8.0.1
+Version:	3.8.3.0
 Release:	1
 License:	Public Domain
 Group:		Libraries
 # Source0Download: http://www.sqlite.org/download.html
-Source0:	http://www.sqlite.org/2013/sqlite-src-%{version_num}.zip
-# Source0-md5:	c4e9a8a98a2ece59c7c385718a59b121
+Source0:	http://www.sqlite.org/2014/sqlite-src-%{version_num}.zip
+# Source0-md5:	bdcac4ea67646e7d5a659b635f0639be
 Patch0:		%{name}-sign-function.patch
 URL:		http://www.sqlite.org/
 %{?with_load_extension:Provides:	%{name}(load_extension)}
