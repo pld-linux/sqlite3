@@ -21,20 +21,20 @@
 %endif
 
 #define		version_num %(echo %{version} |  awk -F. '{printf("%d%02d%02d%02d", $1, $2, $3, $4)}')
-%define		version_num 3080300
+%define		version_num 3080403
 %define		_ulibdir	/usr/lib
-%define		tclver		8.5
+%define		tclver		8.6
 
 Summary:	SQLite library
 Summary(pl.UTF-8):	Biblioteka SQLite
 Name:		sqlite3
-Version:	3.8.3.0
-Release:	2
+Version:	3.8.4.3
+Release:	1
 License:	Public Domain
 Group:		Libraries
 # Source0Download: http://www.sqlite.org/download.html
 Source0:	http://www.sqlite.org/2014/sqlite-src-%{version_num}.zip
-# Source0-md5:	bdcac4ea67646e7d5a659b635f0639be
+# Source0-md5:	34cd453499e4b4564560accf24a9a70e
 Patch0:		%{name}-sign-function.patch
 URL:		http://www.sqlite.org/
 %{?with_load_extension:Provides:	%{name}(load_extension)}
@@ -46,7 +46,7 @@ BuildRequires:	libtool
 BuildRequires:	readline-devel
 %{?with_load_extension:BuildRequires:	sed >= 4.0}
 BuildRequires:	tcl
-%{?with_tcl:BuildRequires:	tcl-devel}
+%{?with_tcl:BuildRequires:	tcl-devel >= %{tclver}}
 BuildRequires:	unzip
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -265,7 +265,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc README
+%doc README.md
 %attr(755,root,root) %{_bindir}/sqlite3
 %attr(755,root,root) /%{_lib}/libsqlite3.so.*.*.*
 %attr(755,root,root) %ghost /%{_lib}/libsqlite3.so.0
