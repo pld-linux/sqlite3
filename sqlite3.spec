@@ -179,6 +179,11 @@ Rozszerzenie sqlite3 dla Tcl.
 
 %{__sed} -i 's/mkdir doc/#mkdir doc/' Makefile.in
 
+if [ "$(cat VERSION)" != "%{version}" ]; then
+	echo "Tarball content doesn't match version %{version}." >&2
+	exit 1
+fi
+
 %build
 %{__libtoolize}
 cp -f /usr/share/automake/config.sub .
