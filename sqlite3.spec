@@ -20,21 +20,21 @@
 %undefine	with_tests
 %endif
 
-#define		version_num %(echo %{version} |  awk -F. '{printf("%d%02d%02d%02d", $1, $2, $3, $4)}')
-%define		version_num 3080702
+%define		version_year	2015
+%define		version_num %(echo %{version} |  awk -F. '{printf("%d%02d%02d%02d", $1, $2, $3, $4)}')
 %define		_ulibdir	/usr/lib
 %define		tclver		8.6
 
 Summary:	SQLite library
 Summary(pl.UTF-8):	Biblioteka SQLite
 Name:		sqlite3
-Version:	3.8.7.2
+Version:	3.8.8.3
 Release:	3
 License:	Public Domain
 Group:		Libraries
 # Source0Download: http://www.sqlite.org/download.html
-Source0:	http://www.sqlite.org/2014/sqlite-src-%{version_num}.zip
-# Source0-md5:	d5f7285c59527caeb2e7401454fdc63e
+Source0:	http://www.sqlite.org/%{version_year}/sqlite-src-%{version_num}.zip
+# Source0-md5:	7aed8084e18c2677c71345cbd8ca0b76
 Patch0:		%{name}-sign-function.patch
 URL:		http://www.sqlite.org/
 %{?with_load_extension:Provides:	%{name}(load_extension)}
