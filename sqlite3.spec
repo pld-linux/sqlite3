@@ -8,7 +8,7 @@
 %bcond_without	doc		# disable documentation building
 %bcond_without	unlock_notify	# disable unlock notify API
 %bcond_without	load_extension	# enable load extension API
-%bcond_with		icu		# ICU tokenizer support
+%bcond_with	icu		# ICU tokenizer support
 
 %ifarch alpha sparc %{x8664}
 %undefine	with_tests
@@ -21,7 +21,8 @@
 %endif
 
 %define		version_year	2015
-%define		version_num %(echo %{version} |  awk -F. '{printf("%d%02d%02d%02d", $1, $2, $3, $4)}')
+#define		version_num %(echo %{version} |  awk -F. '{printf("%d%02d%02d%02d", $1, $2, $3, $4)}')
+%define		version_num	3080803
 %define		_ulibdir	/usr/lib
 %define		tclver		8.6
 
@@ -29,7 +30,7 @@ Summary:	SQLite library
 Summary(pl.UTF-8):	Biblioteka SQLite
 Name:		sqlite3
 Version:	3.8.8.3
-Release:	3
+Release:	1
 License:	Public Domain
 Group:		Libraries
 # Source0Download: http://www.sqlite.org/download.html
