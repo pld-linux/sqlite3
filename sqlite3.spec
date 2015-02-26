@@ -20,8 +20,8 @@
 %undefine	with_tests
 %endif
 
-%define		ver	%{lua:v="";for i in string.gmatch(string.format("%08d", %{vnum}), "..") do; v=v..i:gsub("^0", ".");end;v=v:gsub("^.","");print(v)}
 %define		vnum	3080803
+%define		ver	%{lua:vn=rpm.expand("%vnum");v="";for i in string.gmatch(string.format("%08d", vn), "..") do; v=v..i:gsub("^0", ".");end;v=v:gsub("^.","");print(v)}
 %define		tclver		8.6
 Summary:	SQLite library
 Summary(pl.UTF-8):	Biblioteka SQLite
@@ -174,7 +174,7 @@ sqlite3 tcl extension.
 Rozszerzenie sqlite3 dla Tcl.
 
 %prep
-%setup -q -n sqlite-src-%{version_num}
+%setup -q -n sqlite-src-%{vnum}
 %patch0 -p1
 
 %{__sed} -i 's/mkdir doc/#mkdir doc/' Makefile.in
