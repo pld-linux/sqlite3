@@ -20,9 +20,9 @@
 %undefine	with_tests
 %endif
 
+# lua versions with zero padded without any dots (3 08 10 01 is 3.8.10.1)
 %define		vnum	3081001
-%define		ver	3.8.10.1
-#%%{lua:vn=rpm.expand("%vnum");v="";for i in string.gmatch(string.format("%08d", vn), "..") do; v=v..i:gsub("^0", ".");end;v=v:gsub("^.","");print(v)}
+%define		ver		%{lua:vn=rpm.expand("%vnum");v="";for i in string.gmatch(string.format("%08d", vn), "..") do; v=v.."."..i:gsub("^0", "");end;v=v:gsub("^.","");print(v)}
 
 %define		tclver		8.6
 Summary:	SQLite library
