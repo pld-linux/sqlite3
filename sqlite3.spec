@@ -22,12 +22,13 @@
 
 # sqlite3 version with zero padded without any dots (3 08 10 01 is 3.8.10.1)
 %define		vnum	3081002
+%define		ver		%{lua:vn=rpm.expand("%vnum");v="";for i in string.gmatch(string.format("%08d", vn), "..") do; v=v.."."..i:gsub("^0", "");end;v=v:gsub("^.","");print(v)}
 
 %define		tclver		8.6
 Summary:	SQLite library
 Summary(pl.UTF-8):	Biblioteka SQLite
 Name:		sqlite3
-Version:	3.8.10.2
+Version:	%{ver}
 Release:	1
 License:	Public Domain
 Group:		Libraries
