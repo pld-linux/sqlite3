@@ -29,7 +29,7 @@ Summary:	SQLite library
 Summary(pl.UTF-8):	Biblioteka SQLite
 Name:		sqlite3
 Version:	%{ver}
-Release:	1
+Release:	2
 License:	Public Domain
 Group:		Libraries
 # Source0Download: http://www.sqlite.org/download.html
@@ -213,7 +213,7 @@ append-cppflags -DSQLITE_ENABLE_COLUMN_METADATA
 # Support Full-Text Search versions 3 and 4.
 # http://sqlite.org/fts3.html
 #append-cppflags -DSQLITE_ENABLE_FTS3 -DSQLITE_ENABLE_FTS3_PARENTHESIS -DSQLITE_ENABLE_FTS4 -DSQLITE_ENABLE_FTS4_UNICODE61
-append-cppflags -DSQLITE_ENABLE_FTS3
+append-cppflags -DSQLITE_ENABLE_FTS3 -DSQLITE_ENABLE_FTS3_PARENTHESIS
 
 # Support R*Trees.
 # http://sqlite.org/rtree.html
