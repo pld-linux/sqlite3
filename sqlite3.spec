@@ -29,7 +29,7 @@ Summary:	SQLite library
 Summary(pl.UTF-8):	Biblioteka SQLite
 Name:		sqlite3
 Version:	%{ver}
-Release:	2
+Release:	3
 License:	Public Domain
 Group:		Libraries
 # Source0Download: http://www.sqlite.org/download.html
@@ -222,6 +222,10 @@ append-cppflags -DSQLITE_ENABLE_RTREE
 # Support soundex() function.
 # http://sqlite.org/lang_corefunc.html#soundex
 #append-cppflags -DSQLITE_SOUNDEX
+
+# Support dbstat virtual table.
+# https://www.sqlite.org/dbstat.html
+append-cppflags -DSQLITE_ENABLE_DBSTAT_VTAB
 
 %if %{with unlock_notify}
 # Support unlock notification.
