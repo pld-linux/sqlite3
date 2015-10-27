@@ -21,7 +21,7 @@
 %endif
 
 # sqlite3 version with zero padded without any dots (3 08 10 01 is 3.8.10.1)
-%define		vnum	3081101
+%define		vnum	3090100
 %define		ver		%{lua:vn=rpm.expand("%vnum");v="";for i in string.gmatch(string.format("%08d", vn), "..") do; v=v.."."..i:gsub("^0", "");end;v=v:gsub("^.","");print(v)}
 
 %define		tclver		8.6
@@ -34,7 +34,7 @@ License:	Public Domain
 Group:		Libraries
 # Source0Download: http://www.sqlite.org/download.html
 Source0:	http://www.sqlite.org/2015/sqlite-src-%{vnum}.zip
-# Source0-md5:	4550012d85ffdc607d0c86aef2d47974
+# Source0-md5:	2392df5a532e1badea79d56a7e93f072
 Patch0:		%{name}-sign-function.patch
 URL:		http://www.sqlite.org/
 %{?with_load_extension:Provides:	%{name}(load_extension)}
@@ -181,10 +181,19 @@ Rozszerzenie sqlite3 dla Tcl.
 
 %{__sed} -i 's/mkdir doc/#mkdir doc/' Makefile.in
 
-if [ "$(cat VERSION)" != "%{version}" ]; then
+# temporary hack
+V="$(cat VERSION)"
+[ "$V" = "3.9.1" ] && V="3.9.1.0"
+
+if [ "$V" != "%{version}" ]; then
 	echo "Tarball content doesn't match version %{version}." >&2
 	exit 1
 fi
+
+#if [ "$(cat VERSION)" != "%{version}" ]; then
+#	echo "Tarball content doesn't match version %{version}." >&2
+#	exit 1
+#fi
 
 %build
 %{__libtoolize}
