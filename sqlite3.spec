@@ -21,20 +21,21 @@
 %endif
 
 # sqlite3 version with zero padded without any dots (3 08 10 01 is 3.8.10.1)
-%define		vnum	3090100
-%define		ver		%{lua:vn=rpm.expand("%vnum");v="";for i in string.gmatch(string.format("%08d", vn), "..") do; v=v.."."..i:gsub("^0", "");end;v=v:gsub("^.","");print(v)}
+# but trailing 00 means no 4rd part (3 10 01 00 is 3.10.1)
+%define		vnum	3100100
+%define		ver		%{lua:vn=rpm.expand("%vnum");v="";for i in string.gmatch(string.format("%08d", vn), "..") do v=v.."."..i:gsub("^0", "");end;v=v:gsub("^.",""):gsub("\.0$","");print(v)}
 
 %define		tclver		8.6
 Summary:	SQLite library
 Summary(pl.UTF-8):	Biblioteka SQLite
 Name:		sqlite3
 Version:	%{ver}
-Release:	3
+Release:	1
 License:	Public Domain
 Group:		Libraries
 # Source0Download: http://www.sqlite.org/download.html
-Source0:	http://www.sqlite.org/2015/sqlite-src-%{vnum}.zip
-# Source0-md5:	2392df5a532e1badea79d56a7e93f072
+Source0:	http://www.sqlite.org/2016/sqlite-src-%{vnum}.zip
+# Source0-md5:	037618ad92945e7a394ffe7ddbb9a85c
 Patch0:		%{name}-sign-function.patch
 URL:		http://www.sqlite.org/
 %{?with_load_extension:Provides:	%{name}(load_extension)}
@@ -181,19 +182,10 @@ Rozszerzenie sqlite3 dla Tcl.
 
 %{__sed} -i 's/mkdir doc/#mkdir doc/' Makefile.in
 
-# temporary hack
-V="$(cat VERSION)"
-[ "$V" = "3.9.1" ] && V="3.9.1.0"
-
-if [ "$V" != "%{version}" ]; then
+if [ "$(cat VERSION)" != "%{version}" ]; then
 	echo "Tarball content doesn't match version %{version}." >&2
 	exit 1
 fi
-
-#if [ "$(cat VERSION)" != "%{version}" ]; then
-#	echo "Tarball content doesn't match version %{version}." >&2
-#	exit 1
-#fi
 
 %build
 %{__libtoolize}
