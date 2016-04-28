@@ -26,8 +26,8 @@
 %define		ver		%{lua:vn=rpm.expand("%vnum");v="";for i in string.gmatch(string.format("%08d", vn), "..") do v=v.."."..i:gsub("^0", "");end;v=v:gsub("^.",""):gsub("\.0$","");print(v)}
 
 %define		tclver		8.6
-Summary:	SQLite library
-Summary(pl.UTF-8):	Biblioteka SQLite
+Summary:	SQLite3 library
+Summary(pl.UTF-8):	Biblioteka SQLite3
 Name:		sqlite3
 Version:	%{ver}
 Release:	1
