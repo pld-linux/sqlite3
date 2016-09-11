@@ -1,6 +1,7 @@
 # TODO:
 # - some tests fail with tcl8.5, it's tcl fault,
 #	if someone REALLY cares (s)he can look into it
+# - configure.ac present, but doesn't support all -DEFINES, also it uses bash syntax (var+=value)
 #
 # Conditional build:
 %bcond_with	tests		# run tests
