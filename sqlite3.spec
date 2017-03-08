@@ -5,6 +5,7 @@
 #
 # Conditional build:
 %bcond_with	tests		# run tests
+%bcond_with	readline	# readline (GPL) instead of libedit
 %bcond_without	tcl		# Tcl extension
 %bcond_without	doc		# disable documentation building
 %bcond_without	unlock_notify	# disable unlock notify API
@@ -44,8 +45,9 @@ URL:		http://www.sqlite.org/
 %{?with_icu:Provides:	%{name}(icu)}
 BuildRequires:	autoconf >= 2.50
 BuildRequires:	automake
+%{!?with_readline:BuildRequires:	libedit-devel}
 BuildRequires:	libtool
-BuildRequires:	readline-devel
+%{?with_readline:BuildRequires:	readline-devel}
 %{?with_load_extension:BuildRequires:	sed >= 4.0}
 BuildRequires:	tcl
 %{?with_tcl:BuildRequires:	tcl-devel >= %{tclver}}
@@ -246,6 +248,7 @@ append-libs "-ldl"
 %endif
 
 %configure \
+	%{?with_readline:--disable-editline} \
 	%{!?with_tcl:--disable-tcl}%{?with_tcl:--with-tcl=%{_ulibdir}} \
 	%{__enable_disable load_extension load-extension} \
 	--enable-threadsafe
@@ -261,10 +264,11 @@ append-libs "-ldl"
 %install
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT{/%{_lib},%{_bindir},%{_includedir},%{_libdir},%{_mandir}/man1}
+
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
 
-mv -f $RPM_BUILD_ROOT%{_libdir}/lib*.so.* $RPM_BUILD_ROOT/%{_lib}
+%{__mv} $RPM_BUILD_ROOT%{_libdir}/lib*.so.* $RPM_BUILD_ROOT/%{_lib}
 %{__rm} $RPM_BUILD_ROOT%{_libdir}/lib*.so
 ln -sf /%{_lib}/$(cd $RPM_BUILD_ROOT/%{_lib}; echo lib*.so.*.*) \
 	$RPM_BUILD_ROOT%{_libdir}/libsqlite3.so
