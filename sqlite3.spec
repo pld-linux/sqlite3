@@ -24,7 +24,7 @@
 
 # sqlite3 version with zero padded without any dots (3 08 10 01 is 3.8.10.1)
 # but trailing 00 means no 4rd part (3 11 01 00 is 3.11.1)
-%define		vnum	3190300
+%define		vnum	3200000
 %define		ver		%{lua:vn=rpm.expand("%vnum");v="";for i in string.gmatch(string.format("%08d", vn), "..") do v=v.."."..i:gsub("^0", "");end;v=v:gsub("^.",""):gsub("\.0$","");print(v)}
 
 %define		tclver		8.6
@@ -37,7 +37,7 @@ License:	Public Domain
 Group:		Libraries
 # Source0Download: http://www.sqlite.org/download.html
 Source0:	http://www.sqlite.org/2017/sqlite-src-%{vnum}.zip
-# Source0-md5:	732eecf6806ad015be79ff5257494188
+# Source0-md5:	8336ec9194bff2ee1f8215778e8017b9
 Patch0:		%{name}-sign-function.patch
 URL:		http://www.sqlite.org/
 %{?with_load_extension:Provides:	%{name}(load_extension)}
