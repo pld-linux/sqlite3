@@ -32,7 +32,7 @@ Summary:	SQLite3 library
 Summary(pl.UTF-8):	Biblioteka SQLite3
 Name:		sqlite3
 Version:	%{ver}
-Release:	1
+Release:	2
 License:	Public Domain
 Group:		Libraries
 # Source0Download: http://www.sqlite.org/download.html
@@ -251,7 +251,8 @@ append-libs "-ldl"
 	%{?with_readline:--disable-editline} \
 	%{!?with_tcl:--disable-tcl}%{?with_tcl:--with-tcl=%{_ulibdir}} \
 	%{__enable_disable load_extension load-extension} \
-	--enable-threadsafe
+	--enable-threadsafe \
+	--enable-fts5
 
 %{__make}
 
