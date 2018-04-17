@@ -2,6 +2,7 @@
 # - some tests fail with tcl8.5, it's tcl fault,
 #	if someone REALLY cares (s)he can look into it
 # - configure.ac present, but doesn't support all -DEFINES, also it uses bash syntax (var+=value)
+# - sqlite binary is linked statically with sqlite library
 #
 # Conditional build:
 %bcond_with	tests		# run tests
@@ -32,7 +33,7 @@ Summary:	SQLite3 library
 Summary(pl.UTF-8):	Biblioteka SQLite3
 Name:		sqlite3
 Version:	%{ver}
-Release:	1
+Release:	2
 License:	Public Domain
 Group:		Libraries
 # Source0Download: http://www.sqlite.org/download.html
@@ -40,9 +41,6 @@ Source0:	http://www.sqlite.org/2018/sqlite-src-%{vnum}.zip
 # Source0-md5:	e7932e95208f9fd903f19459e2c09121
 Patch0:		%{name}-sign-function.patch
 URL:		http://www.sqlite.org/
-%{?with_load_extension:Provides:	%{name}(load_extension)}
-%{?with_unlock_notify:Provides:	%{name}(unlock_notify)}
-%{?with_icu:Provides:	%{name}(icu)}
 BuildRequires:	autoconf >= 2.50
 BuildRequires:	automake
 %{!?with_readline:BuildRequires:	libedit-devel}
@@ -52,6 +50,10 @@ BuildRequires:	libtool
 BuildRequires:	tcl
 %{?with_tcl:BuildRequires:	tcl-devel >= %{tclver}}
 BuildRequires:	unzip
+Requires:	%{name}-libs = %{version}-%{release}
+%{?with_icu:Provides:	%{name}(icu)}
+%{?with_load_extension:Provides:	%{name}(load_extension)}
+%{?with_unlock_notify:Provides:	%{name}(unlock_notify)}
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define		_ulibdir	/usr/lib
@@ -81,11 +83,19 @@ bazodanowych przy większości operacji na bazie danych. Dodatkowo
 oprócz biblioteki języka C, dostarczany jest program do zarządzania
 bazami danych.
 
+%package libs
+Summary:	Shared library for the sqlite3 embeddable SQL database engine
+Group:		Libraries
+Conflicts:	%{name} < 3.23.1-2
+
+%description libs
+This package contains the shared library for %{name}.
+
 %package devel
 Summary:	Header files for SQLite development
 Summary(pl.UTF-8):	Pliki nagłówkowe SQLite
 Group:		Development/Libraries
-Requires:	%{name} = %{version}-%{release}
+Requires:	%{name}-libs = %{version}-%{release}
 %if %{with unlock_notify}
 Provides:	%{name}-devel(unlock_notify)
 %endif
@@ -279,15 +289,18 @@ cp -p sqlite3.1 $RPM_BUILD_ROOT%{_mandir}/man1
 %clean
 rm -rf $RPM_BUILD_ROOT
 
-%post	-p /sbin/ldconfig
-%postun -p /sbin/ldconfig
+%post	libs -p /sbin/ldconfig
+%postun libs -p /sbin/ldconfig
+
+%files libs
+%defattr(644,root,root,755)
+%attr(755,root,root) /%{_lib}/libsqlite3.so.*.*.*
+%attr(755,root,root) %ghost /%{_lib}/libsqlite3.so.0
 
 %files
 %defattr(644,root,root,755)
 %doc README.md
 %attr(755,root,root) %{_bindir}/sqlite3
-%attr(755,root,root) /%{_lib}/libsqlite3.so.*.*.*
-%attr(755,root,root) %ghost /%{_lib}/libsqlite3.so.0
 %{_mandir}/man1/sqlite3.1*
 
 %files devel
