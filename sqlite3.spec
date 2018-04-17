@@ -1,7 +1,6 @@
 # TODO:
 # - some tests fail with tcl8.5, it's tcl fault,
 #	if someone REALLY cares (s)he can look into it
-# - configure.ac present, but doesn't support all -DEFINES, also it uses bash syntax (var+=value)
 # - sqlite binary is linked statically with sqlite library
 #
 # Conditional build:
@@ -51,9 +50,9 @@ BuildRequires:	tcl
 %{?with_tcl:BuildRequires:	tcl-devel >= %{tclver}}
 BuildRequires:	unzip
 Requires:	%{name}-libs = %{version}-%{release}
-%{?with_icu:Provides:	%{name}(icu)}
-%{?with_load_extension:Provides:	%{name}(load_extension)}
-%{?with_unlock_notify:Provides:	%{name}(unlock_notify)}
+%{?with_icu:Provides:	%{name}(icu) = %{version}}
+%{?with_load_extension:Provides:	%{name}(load_extension) = %{version}}
+%{?with_unlock_notify:Provides:	%{name}(unlock_notify) = %{version}}
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define		_ulibdir	/usr/lib
@@ -85,11 +84,18 @@ bazami danych.
 
 %package libs
 Summary:	Shared library for the sqlite3 embeddable SQL database engine
+Summary(pl.UTF-8):	Biblioteka współdzielona osadzalnego silnika baz danych SQL sqlite3
 Group:		Libraries
-Conflicts:	%{name} < 3.23.1-2
+%{?with_icu:Provides:	%{name}-libs(icu) = %{version}}
+%{?with_load_extension:Provides:	%{name}-libs(load_extension) = %{version}}
+%{?with_unlock_notify:Provides:	%{name}-libs(unlock_notify) = %{version}}
+Conflicts:	sqlite3 < 3.23.1-2
 
 %description libs
-This package contains the shared library for %{name}.
+This package contains the SQLite 3 shared library.
+
+%description libs -l pl.UTF-8
+Ten pakiet zawiera bibliotekę współdzieloną SQLite 3.
 
 %package devel
 Summary:	Header files for SQLite development
@@ -97,13 +103,13 @@ Summary(pl.UTF-8):	Pliki nagłówkowe SQLite
 Group:		Development/Libraries
 Requires:	%{name}-libs = %{version}-%{release}
 %if %{with unlock_notify}
-Provides:	%{name}-devel(unlock_notify)
+Provides:	%{name}-devel(unlock_notify) = %{version}
 %endif
 %if %{with load_extension}
-Provides:	%{name}-devel(load_extension)
+Provides:	%{name}-devel(load_extension) = %{version}
 %endif
 %if %{with icu}
-Provides:	%{name}-devel(icu)
+Provides:	%{name}-devel(icu) = %{version}
 %endif
 
 %description devel
