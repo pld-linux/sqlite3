@@ -37,7 +37,7 @@ License:	Public Domain
 Group:		Libraries
 # Source0Download: http://www.sqlite.org/download.html
 Source0:	http://www.sqlite.org/2018/sqlite-src-%{vnum}.zip
-# Source0-md5:	36408fba1079b68421f3341f4505a960
+# Source0-md5:	4aa37b7b3cf5bd708dae325a0a0d440e
 Patch0:		%{name}-sign-function.patch
 URL:		http://www.sqlite.org/
 BuildRequires:	autoconf >= 2.50
