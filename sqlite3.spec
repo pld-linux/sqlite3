@@ -24,7 +24,7 @@
 
 # sqlite3 version with zero padded without any dots (3 08 10 01 is 3.8.10.1)
 # but trailing 00 means no 4rd part (3 11 01 00 is 3.11.1)
-%define		vnum	3240000
+%define		vnum	3250000
 %define		ver		%{lua:vn=rpm.expand("%vnum");v="";for i in string.gmatch(string.format("%08d", vn), "..") do v=v.."."..i:gsub("^0", "");end;v=v:gsub("^.",""):gsub("\.0$","");print(v)}
 
 %define		tclver		8.6
@@ -32,7 +32,7 @@ Summary:	SQLite3 library
 Summary(pl.UTF-8):	Biblioteka SQLite3
 Name:		sqlite3
 Version:	%{ver}
-Release:	3
+Release:	1
 License:	Public Domain
 Group:		Libraries
 # Source0Download: http://www.sqlite.org/download.html
@@ -225,6 +225,9 @@ export TCLLIBDIR="%{tcl_sitearch}/sqlite3"
 
 append-cppflags -DSQLITE_DISABLE_DIRSYNC=1 -DSQLITE_SECURE_DELETE
 
+# Support for optional ORDER BY and LIMIT clause on UPDATE and DELETE statements
+append-cppflags -DSQLITE_ENABLE_UPDATE_DELETE_LIMIT
+
 # Support column metadata functions.
 # http://sqlite.org/c3ref/column_database_name.html
 # http://sqlite.org/c3ref/table_column_metadata.html
@@ -240,6 +243,10 @@ append-cppflags -DSQLITE_ENABLE_FTS3_TOKENIZER
 # http://sqlite.org/rtree.html
 append-cppflags -DSQLITE_ENABLE_RTREE
 
+# Support Geopoly module (new as of 3.25.0)
+# https://www.sqlite.org/geopoly.html
+append-cppflags -DSQLITE_ENABLE_GEOPOLY
+
 # Support soundex() function.
 # http://sqlite.org/lang_corefunc.html#soundex
 #append-cppflags -DSQLITE_SOUNDEX
@@ -247,6 +254,10 @@ append-cppflags -DSQLITE_ENABLE_RTREE
 # Support dbstat virtual table.
 # https://www.sqlite.org/dbstat.html
 append-cppflags -DSQLITE_ENABLE_DBSTAT_VTAB
+
+# Support for session extension (record changes to a changeset).
+# https://www.sqlite.org/sessionintro.html
+append-cppflags -DSQLITE_ENABLE_SESSION -DSQLITE_ENABLE_PREUPDATE_HOOK
 
 %if %{with unlock_notify}
 # Support unlock notification.
