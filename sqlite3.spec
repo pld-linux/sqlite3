@@ -40,6 +40,7 @@ Group:		Libraries
 Source0:	http://www.sqlite.org/2018/sqlite-src-%{vnum}.zip
 # Source0-md5:	d0fbd4d8a8b99a8b6aa9405dace570c0
 Patch0:		%{name}-sign-function.patch
+# https://github.com/CanonicalLtd/dqlite/issues/91
 Patch1:		https://github.com/CanonicalLtd/sqlite/releases/download/version-%{ver}%%2Breplication3/sqlite-%{ver}.diff
 # Patch1-md5:	a865f0b6a7b72be0b48c3a6ddf4fd4a5
 URL:		http://www.sqlite.org/
