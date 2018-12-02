@@ -41,8 +41,10 @@ Source0:	http://www.sqlite.org/2018/sqlite-src-%{vnum}.zip
 # Source0-md5:	dfc2ae0e9b810e9e3db553f71ea832ad
 Patch0:		%{name}-sign-function.patch
 # https://github.com/CanonicalLtd/dqlite/issues/91
+%if %{with wal_replication}
 Patch1:		https://github.com/CanonicalLtd/sqlite/releases/download/version-%{ver}%%2Breplication3/sqlite-%{ver}.diff
 # Patch1-md5:	a865f0b6a7b72be0b48c3a6ddf4fd4a5
+%endif
 URL:		http://www.sqlite.org/
 BuildRequires:	autoconf >= 2.50
 BuildRequires:	automake
