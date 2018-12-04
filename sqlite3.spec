@@ -33,7 +33,7 @@ Summary:	SQLite3 library
 Summary(pl.UTF-8):	Biblioteka SQLite3
 Name:		sqlite3
 Version:	%{ver}
-Release:	0.1
+Release:	1
 License:	Public Domain
 Group:		Libraries
 # Source0Download: http://www.sqlite.org/download.html
@@ -42,7 +42,7 @@ Source0:	http://www.sqlite.org/2018/sqlite-src-%{vnum}.zip
 Patch0:		%{name}-sign-function.patch
 # https://github.com/CanonicalLtd/dqlite/issues/91
 Patch1:		https://github.com/CanonicalLtd/sqlite/releases/download/version-%{ver}%%2Breplication3/sqlite-%{ver}.diff
-# Patch1-md5:	a865f0b6a7b72be0b48c3a6ddf4fd4a5
+# Patch1-md5:	4a279faaf27e95760b73423875c6d002
 URL:		http://www.sqlite.org/
 BuildRequires:	autoconf >= 2.50
 BuildRequires:	automake
