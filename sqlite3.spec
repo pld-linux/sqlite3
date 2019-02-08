@@ -13,7 +13,7 @@
 %bcond_with	icu		# ICU tokenizer support
 %bcond_without	wal_replication		# WAL replication support
 
-%ifarch alpha sparc %{x8664}
+%ifarch %{x8664}
 %undefine	with_tests
 %endif
 
