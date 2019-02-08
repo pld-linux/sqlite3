@@ -44,7 +44,7 @@ Source0:	https://www.sqlite.org/2019/sqlite-src-%{vnum}.zip
 # Source0-md5:	e0fb6e677048c95637fd10408a811011
 Patch0:		%{name}-sign-function.patch
 # https://github.com/CanonicalLtd/dqlite/issues/91
-Patch1:		https://github.com/CanonicalLtd/sqlite/releases/download/version-%{walver}%%2Breplication3/sqlite-%{walver}.diff
+Patch1:		https://github.com/CanonicalLtd/sqlite/releases/download/version-%{walver}+replication3/sqlite-%{walver}.diff
 # Patch1-md5:	4a279faaf27e95760b73423875c6d002
 URL:		https://www.sqlite.org/
 BuildRequires:	autoconf >= 2.50
