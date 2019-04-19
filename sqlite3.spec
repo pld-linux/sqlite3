@@ -29,14 +29,14 @@
 %define		ver		%{lua:vn=rpm.expand("%vnum");v="";for i in string.gmatch(string.format("%08d", vn), "..") do v=v.."."..i:gsub("^0", "");end;v=v:gsub("^.",""):gsub("\.0$","");print(v)}
 
 # wal replication version
-%define		walver	3.27.2
+%define		walver	3.28.0
 
 %define		tclver		8.6
 Summary:	SQLite3 library
 Summary(pl.UTF-8):	Biblioteka SQLite3
 Name:		sqlite3
 Version:	%{ver}
-Release:	0.1
+Release:	1
 License:	Public Domain
 Group:		Libraries
 # Source0Download: http://www.sqlite.org/download.html
@@ -45,7 +45,7 @@ Source0:	https://www.sqlite.org/2019/sqlite-src-%{vnum}.zip
 Patch0:		%{name}-sign-function.patch
 # https://github.com/CanonicalLtd/dqlite/issues/91
 Patch1:		https://github.com/CanonicalLtd/sqlite/releases/download/version-%{walver}+replication3/sqlite-%{walver}.diff
-# Patch1-md5:	a4187866db4e8e7e06a77c1fd8d9ff01
+# Patch1-md5:	58d6b67af08d373047756ed5d2579fa8
 URL:		https://www.sqlite.org/
 BuildRequires:	autoconf >= 2.50
 BuildRequires:	automake
