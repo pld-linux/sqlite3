@@ -29,7 +29,7 @@
 %define		ver		%{lua:vn=rpm.expand("%vnum");v="";for i in string.gmatch(string.format("%08d", vn), "..") do v=v.."."..i:gsub("^0", "");end;v=v:gsub("^.",""):gsub("\.0$","");print(v)}
 
 # wal replication version
-%define		walver	3.29.0
+%define		walver	3.30.1
 
 %define		tclver		8.6
 Summary:	SQLite3 library
@@ -45,7 +45,7 @@ Source0:	https://www.sqlite.org/2019/sqlite-src-%{vnum}.zip
 Patch0:		%{name}-sign-function.patch
 # https://github.com/CanonicalLtd/dqlite/issues/91
 Patch1:		https://github.com/CanonicalLtd/sqlite/releases/download/version-%{walver}+replication3/sqlite-%{walver}.diff
-# Patch1-md5:	6707a179ad80076f290a54e424c488c8
+# Patch1-md5:	117f94e914198df90aac081262bdd146
 URL:		https://www.sqlite.org/
 BuildRequires:	autoconf >= 2.50
 BuildRequires:	automake
