@@ -11,6 +11,7 @@
 %bcond_without	unlock_notify	# disable unlock notify API
 %bcond_without	load_extension	# enable load extension API
 %bcond_with	icu		# ICU tokenizer support
+%bcond_without	json1		# json1 extension
 %bcond_without	wal_replication		# WAL replication support
 
 %ifarch %{x8664}
@@ -36,7 +37,7 @@ Summary:	SQLite3 library
 Summary(pl.UTF-8):	Biblioteka SQLite3
 Name:		sqlite3
 Version:	%{ver}
-Release:	1
+Release:	2
 License:	Public Domain
 Group:		Libraries
 # Source0Download: http://www.sqlite.org/download.html
@@ -295,6 +296,7 @@ append-cppflags -DSQLITE_ENABLE_WAL_REPLICATION
 	%{?with_readline:--disable-editline} \
 	%{!?with_tcl:--disable-tcl}%{?with_tcl:--with-tcl=%{_ulibdir}} \
 	%{__enable_disable load_extension load-extension} \
+	%{__enable_disable json1} \
 	--enable-threadsafe \
 	--enable-fts5
 
