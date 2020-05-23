@@ -26,7 +26,7 @@
 
 # sqlite3 version with zero padded without any dots (3 08 10 01 is 3.8.10.1)
 # but trailing 00 means no 4rd part (3 11 01 00 is 3.11.1)
-%define		vnum	3310100
+%define		vnum	3320000
 %define		ver		%{lua:vn=rpm.expand("%vnum");v="";for i in string.gmatch(string.format("%08d", vn), "..") do v=v.."."..i:gsub("^0", "");end;v=v:gsub("^.",""):gsub("\.0$","");print(v)}
 
 # wal replication version
@@ -37,12 +37,12 @@ Summary:	SQLite3 library
 Summary(pl.UTF-8):	Biblioteka SQLite3
 Name:		sqlite3
 Version:	%{ver}
-Release:	1
+Release:	0.1
 License:	Public Domain
 Group:		Libraries
 # Source0Download: http://www.sqlite.org/download.html
 Source0:	https://www.sqlite.org/2020/sqlite-src-%{vnum}.zip
-# Source0-md5:	21d4eb07c3db5731cbece0ed4667cdc0
+# Source0-md5:	9c1c3033194540810bfe852ea88b9e07
 Patch0:		%{name}-sign-function.patch
 # https://github.com/CanonicalLtd/dqlite/issues/91
 Patch1:		https://github.com/CanonicalLtd/sqlite/releases/download/version-%{walver}+replication4/sqlite-%{walver}.diff
