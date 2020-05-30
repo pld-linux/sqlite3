@@ -26,27 +26,27 @@
 
 # sqlite3 version with zero padded without any dots (3 08 10 01 is 3.8.10.1)
 # but trailing 00 means no 4rd part (3 11 01 00 is 3.11.1)
-%define		vnum	3320000
+%define		vnum	3320100
 %define		ver		%{lua:vn=rpm.expand("%vnum");v="";for i in string.gmatch(string.format("%08d", vn), "..") do v=v.."."..i:gsub("^0", "");end;v=v:gsub("^.",""):gsub("\.0$","");print(v)}
 
 # wal replication version
-%define		walver	3.31.1
+%define		walver	3.32.1
 
 %define		tclver		8.6
 Summary:	SQLite3 library
 Summary(pl.UTF-8):	Biblioteka SQLite3
 Name:		sqlite3
 Version:	%{ver}
-Release:	0.1
+Release:	1
 License:	Public Domain
 Group:		Libraries
 # Source0Download: http://www.sqlite.org/download.html
 Source0:	https://www.sqlite.org/2020/sqlite-src-%{vnum}.zip
-# Source0-md5:	9c1c3033194540810bfe852ea88b9e07
+# Source0-md5:	57df57686c663a1a910b1148a04db2e5
 Patch0:		%{name}-sign-function.patch
 # https://github.com/CanonicalLtd/dqlite/issues/91
 Patch1:		https://github.com/CanonicalLtd/sqlite/releases/download/version-%{walver}+replication4/sqlite-%{walver}.diff
-# Patch1-md5:	3675635e60ab0d74893b2dd9707af3ca
+# Patch1-md5:	17ff8c8e6952445accffbf7fb51d1664
 URL:		https://www.sqlite.org/
 BuildRequires:	autoconf >= 2.50
 BuildRequires:	automake
