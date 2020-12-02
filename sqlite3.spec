@@ -222,7 +222,6 @@ fi
 
 %build
 %{__libtoolize}
-cp -f /usr/share/automake/config.sub .
 %{__aclocal}
 %{__autoconf} --force
 append-cppflags() {
