@@ -53,6 +53,7 @@ BuildRequires:	automake
 %{!?with_readline:BuildRequires:	libedit-devel}
 BuildRequires:	libtool
 %{?with_readline:BuildRequires:	readline-devel}
+BuildRequires:	rpmbuild(macros) >= 1.527
 %{?with_load_extension:BuildRequires:	sed >= 4.0}
 BuildRequires:	tcl
 %{?with_tcl:BuildRequires:	tcl-devel >= %{tclver}}
