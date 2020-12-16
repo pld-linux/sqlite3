@@ -12,7 +12,7 @@
 %bcond_without	load_extension	# enable load extension API
 %bcond_with	icu		# ICU tokenizer support
 %bcond_without	json1		# json1 extension
-%bcond_without	wal_replication		# WAL replication support
+%bcond_with	wal_replication		# WAL replication support
 
 %ifarch %{x8664}
 %undefine	with_tests
@@ -37,7 +37,7 @@ Summary:	SQLite3 library
 Summary(pl.UTF-8):	Biblioteka SQLite3
 Name:		sqlite3
 Version:	%{ver}
-Release:	0.1
+Release:	1
 License:	Public Domain
 Group:		Libraries
 # Source0Download: http://www.sqlite.org/download.html
