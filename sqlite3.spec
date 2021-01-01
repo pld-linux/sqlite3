@@ -12,7 +12,6 @@
 %bcond_without	load_extension	# enable load extension API
 %bcond_with	icu		# ICU tokenizer support
 %bcond_without	json1		# json1 extension
-%bcond_with	wal_replication		# WAL replication support
 
 %ifarch %{x8664}
 %undefine	with_tests
@@ -29,9 +28,6 @@
 %define		vnum	3340000
 %define		ver		%{lua:vn=rpm.expand("%vnum");v="";for i in string.gmatch(string.format("%08d", vn), "..") do v=v.."."..i:gsub("^0", "");end;v=v:gsub("^.",""):gsub("\.0$","");print(v)}
 
-# wal replication version
-%define		walver	3.32.3
-
 %define		tclver		8.6
 Summary:	SQLite3 library
 Summary(pl.UTF-8):	Biblioteka SQLite3
@@ -45,8 +41,6 @@ Source0:	https://www.sqlite.org/2020/sqlite-src-%{vnum}.zip
 # Source0-md5:	ce61b97012ab111d1ccd7f2d97922ec7
 Patch0:		%{name}-sign-function.patch
 # https://github.com/CanonicalLtd/dqlite/issues/91
-Patch1:		https://github.com/CanonicalLtd/sqlite/releases/download/version-%{walver}+replication4/sqlite-%{walver}.diff
-# Patch1-md5:	26055e71b9e58cb765b9744626d453f9
 URL:		https://www.sqlite.org/
 BuildRequires:	autoconf >= 2.50
 BuildRequires:	automake
@@ -62,7 +56,6 @@ Requires:	%{name}-libs = %{version}-%{release}
 %{?with_icu:Provides:	%{name}(icu) = %{version}}
 %{?with_load_extension:Provides:	%{name}(load_extension) = %{version}}
 %{?with_unlock_notify:Provides:	%{name}(unlock_notify) = %{version}}
-%{?with_wal_replication:Provides:	%{name}(wal_replication) = %{version}}
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define		_ulibdir	/usr/lib
@@ -99,7 +92,6 @@ Group:		Libraries
 %{?with_icu:Provides:	%{name}-libs(icu) = %{version}}
 %{?with_load_extension:Provides:	%{name}-libs(load_extension) = %{version}}
 %{?with_unlock_notify:Provides:	%{name}-libs(unlock_notify) = %{version}}
-%{?with_wal_replication:Provides:	%{name}-libs(wal_replication) = %{version}}
 Conflicts:	sqlite3 < 3.23.1-2
 
 %description libs
@@ -122,7 +114,6 @@ Provides:	%{name}-devel(load_extension) = %{version}
 %if %{with icu}
 Provides:	%{name}-devel(icu) = %{version}
 %endif
-%{?with_wal_replication:Provides:	%{name}-devel(wal_replication) = %{version}}
 
 %description devel
 SQLite is a C library that implements an SQL database engine. A large
@@ -166,7 +157,6 @@ Provides:	%{name}-static(unlock_notify)
 %if %{with load_extension}
 Provides:	%{name}-static(load_extension)
 %endif
-%{?with_wal_replication:Provides:	%{name}-static(wal_replication)}
 
 %description static
 SQLite is a C library that implements an SQL database engine. A large
@@ -211,7 +201,6 @@ Rozszerzenie sqlite3 dla Tcl.
 %prep
 %setup -q -n sqlite-src-%{vnum}
 %patch0 -p1
-%{?with_wal_replication:%patch1 -p1}
 
 %{__sed} -i 's/mkdir doc/#mkdir doc/' Makefile.in
 
@@ -285,11 +274,6 @@ append-libs "-licui18n -licuuc"
 
 %if %{with load_extension}
 append-libs "-ldl"
-%endif
-
-%if %{with wal_replication}
-# A patched version of SQLite with support for WAL-based replication
-append-cppflags -DSQLITE_ENABLE_WAL_REPLICATION
 %endif
 
 %configure \
