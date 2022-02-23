@@ -11,7 +11,7 @@
 %bcond_without	unlock_notify	# disable unlock notify API
 %bcond_without	load_extension	# enable load extension API
 %bcond_with	icu		# ICU tokenizer support
-%bcond_without	json1		# json1 extension
+%bcond_without	json		# json functions
 
 %ifarch %{x8664}
 %undefine	with_tests
@@ -25,7 +25,7 @@
 
 # sqlite3 version with zero padded without any dots (3 08 10 01 is 3.8.10.1)
 # but trailing 00 means no 4rd part (3 11 01 00 is 3.11.1)
-%define		vnum	3370200
+%define		vnum	3380000
 %define		ver		%{lua:vn=rpm.expand("%vnum");v="";for i in string.gmatch(string.format("%08d", vn), "..") do v=v.."."..i:gsub("^0", "");end;v=v:gsub("^.",""):gsub("\.0$","");print(v)}
 
 %define		tclver		8.6
@@ -38,7 +38,7 @@ License:	Public Domain
 Group:		Libraries
 # Source0Download: http://www.sqlite.org/download.html
 Source0:	https://www.sqlite.org/2022/sqlite-src-%{vnum}.zip
-# Source0-md5:	24b7a711e1d03f7eb7a989c58c7ddb9f
+# Source0-md5:	bf64575bb83d65512ad6b83182234883
 Patch0:		%{name}-amalgamation_configure.patch
 URL:		https://www.sqlite.org/
 BuildRequires:	autoconf >= 2.50
@@ -279,7 +279,7 @@ append-libs "-ldl"
 	%{?with_readline:--disable-editline} \
 	%{!?with_tcl:--disable-tcl}%{?with_tcl:--with-tcl=%{_ulibdir}} \
 	%{__enable_disable load_extension load-extension} \
-	%{__enable_disable json1} \
+	%{__enable_disable json} \
 	--enable-threadsafe \
 	--enable-fts5
 
