@@ -12,6 +12,7 @@
 %bcond_without	load_extension	# enable load extension API
 %bcond_with	icu		# ICU tokenizer support
 %bcond_without	json		# json functions
+%bcond_without	static_libs	# static library
 
 %ifarch %{x8664}
 %undefine	with_tests
@@ -280,6 +281,7 @@ append-libs "-ldl"
 	%{!?with_tcl:--disable-tcl}%{?with_tcl:--with-tcl=%{_ulibdir}} \
 	%{__enable_disable load_extension load-extension} \
 	%{__enable_disable json} \
+	%{__enable_disable static_libs static} \
 	--enable-threadsafe \
 	--enable-fts5
 
@@ -330,9 +332,11 @@ rm -rf $RPM_BUILD_ROOT
 %{_includedir}/sqlite3ext.h
 %{_pkgconfigdir}/sqlite3.pc
 
+%if %{with static_libs}
 %files static
 %defattr(644,root,root,755)
 %{_libdir}/libsqlite3.a
+%endif
 
 %if %{with tcl}
 %files -n tcl-%{name}
