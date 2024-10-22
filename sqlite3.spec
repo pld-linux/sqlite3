@@ -40,7 +40,6 @@ Group:		Libraries
 # Source0Download: http://www.sqlite.org/download.html
 Source0:	https://www.sqlite.org/2024/sqlite-src-%{vnum}.zip
 # Source0-md5:	ce83f1ffb3b051856e072678cbd3039f
-Patch0:		%{name}-amalgamation_configure.patch
 URL:		https://www.sqlite.org/
 BuildRequires:	autoconf >= 2.50
 BuildRequires:	automake
@@ -200,7 +199,6 @@ Rozszerzenie sqlite3 dla Tcl.
 
 %prep
 %setup -q -n sqlite-src-%{vnum}
-%patch0 -p1
 
 %{__sed} -i 's/mkdir doc/#mkdir doc/' Makefile.in
 
