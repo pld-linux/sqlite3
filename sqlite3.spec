@@ -26,7 +26,7 @@
 
 # sqlite3 version with zero padded without any dots (3 08 10 01 is 3.8.10.1)
 # but trailing 00 means no 4rd part (3 11 01 00 is 3.11.1)
-%define		vnum	3460100
+%define		vnum	3480000
 %define		ver		%{lua:vn=rpm.expand("%vnum");v="";for i in string.gmatch(string.format("%08d", vn), "..") do v=v.."."..i:gsub("^0", "");end;v=v:gsub("^.",""):gsub("\.0$","");print(v)}
 
 %define		tclver		8.6
@@ -38,8 +38,8 @@ Release:	1
 License:	Public Domain
 Group:		Libraries
 # Source0Download: http://www.sqlite.org/download.html
-Source0:	https://www.sqlite.org/2024/sqlite-src-%{vnum}.zip
-# Source0-md5:	ce83f1ffb3b051856e072678cbd3039f
+Source0:	https://www.sqlite.org/2025/sqlite-src-%{vnum}.zip
+# Source0-md5:	8dfdb4b985e7b2ec622e3d260092af46
 URL:		https://www.sqlite.org/
 BuildRequires:	autoconf >= 2.50
 BuildRequires:	automake
@@ -208,9 +208,6 @@ if [ "$(cat VERSION)" != "%{version}" ]; then
 fi
 
 %build
-%{__libtoolize}
-%{__aclocal}
-%{__autoconf} --force
 append-cppflags() {
 	CPPFLAGS="$CPPFLAGS $*"
 }
@@ -275,6 +272,7 @@ append-libs "-ldl"
 %endif
 
 %configure \
+	--soname=legacy \
 	%{?with_readline:--disable-editline} \
 	%{!?with_tcl:--disable-tcl}%{?with_tcl:--with-tcl=%{_ulibdir}} \
 	%{__enable_disable load_extension load-extension} \
@@ -325,7 +323,6 @@ rm -rf $RPM_BUILD_ROOT
 %files devel
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/libsqlite3.so
-%{_libdir}/libsqlite3.la
 %{_includedir}/sqlite3.h
 %{_includedir}/sqlite3ext.h
 %{_pkgconfigdir}/sqlite3.pc
