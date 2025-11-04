@@ -26,7 +26,7 @@
 
 # sqlite3 version with zero padded without any dots (3 08 10 01 is 3.8.10.1)
 # but trailing 00 means no 4rd part (3 11 01 00 is 3.11.1)
-%define		vnum	3500400
+%define		vnum	3510000
 %define		ver		%{lua:vn=rpm.expand("%vnum");v="";for i in string.gmatch(string.format("%08d", vn), "..") do v=v.."."..i:gsub("^0", "");end;v=v:gsub("^.",""):gsub("\.0$","");print(v)}
 
 %define		tclver		8.6
@@ -39,7 +39,7 @@ License:	Public Domain
 Group:		Libraries
 # Source0Download: http://www.sqlite.org/download.html
 Source0:	https://www.sqlite.org/2025/sqlite-src-%{vnum}.zip
-# Source0-md5:	0a95c096fc1380c60a6467337de209c9
+# Source0-md5:	d9ccc0a8b1fc62ceab488634ae44089d
 URL:		https://www.sqlite.org/
 BuildRequires:	autoconf >= 2.50
 BuildRequires:	automake
@@ -337,6 +337,6 @@ rm -rf $RPM_BUILD_ROOT
 %files -n tcl-%{name}
 %defattr(644,root,root,755)
 %dir %{_libdir}/tcl*/sqlite3
-%attr(755,root,root) %{_libdir}/tcl%{tclver}/sqlite3/libtclsqlite3.so
+%attr(755,root,root) %{_libdir}/tcl%{tclver}/sqlite3/libsqlite%{version}.so
 %{_libdir}/tcl%{tclver}/sqlite3/pkgIndex.tcl
 %endif
