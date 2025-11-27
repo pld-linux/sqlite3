@@ -51,7 +51,7 @@ BuildRequires:	rpmbuild(macros) >= 1.527
 BuildRequires:	tcl
 %{?with_tcl:BuildRequires:	tcl-devel >= %{tclver}}
 BuildRequires:	unzip
-Requires:	%{name}-libs = %{version}-%{release}
+Requires:	%{name}-libs%{?_isa} = %{version}-%{release}
 %{?with_icu:Provides:	%{name}(icu) = %{version}}
 %{?with_load_extension:Provides:	%{name}(load_extension) = %{version}}
 %{?with_unlock_notify:Provides:	%{name}(unlock_notify) = %{version}}
@@ -103,7 +103,7 @@ Ten pakiet zawiera bibliotekę współdzieloną SQLite 3.
 Summary:	Header files for SQLite development
 Summary(pl.UTF-8):	Pliki nagłówkowe SQLite
 Group:		Development/Libraries
-Requires:	%{name}-libs = %{version}-%{release}
+Requires:	%{name}-libs%{?_isa} = %{version}-%{release}
 %if %{with unlock_notify}
 Provides:	%{name}-devel(unlock_notify) = %{version}
 %endif
@@ -149,7 +149,7 @@ używających biblioteki SQLite.
 Summary:	Static libraries for SQLite development
 Summary(pl.UTF-8):	Statyczne biblioteki SQLite
 Group:		Development/Libraries
-Requires:	%{name}-devel = %{version}-%{release}
+Requires:	%{name}-devel%{?_isa} = %{version}-%{release}
 %if %{with unclock_notify}
 Provides:	%{name}-static(unlock_notify)
 %endif
