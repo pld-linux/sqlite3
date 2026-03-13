@@ -26,7 +26,7 @@
 
 # sqlite3 version with zero padded without any dots (3 08 10 01 is 3.8.10.1)
 # but trailing 00 means no 4rd part (3 11 01 00 is 3.11.1)
-%define		vnum	3520000
+%define		vnum	3510300
 %define		ver		%{lua:vn=rpm.expand("%vnum");v="";for i in string.gmatch(string.format("%08d", vn), "..") do v=v.."."..i:gsub("^0", "");end;v=v:gsub("^.",""):gsub("\.0$","");print(v)}
 
 %define		tclver		8.6
@@ -35,11 +35,12 @@ Summary(pl.UTF-8):	Biblioteka SQLite3
 Name:		sqlite3
 Version:	%{ver}
 Release:	1
+Epoch:		1
 License:	Public Domain
 Group:		Libraries
 # Source0Download: http://www.sqlite.org/download.html
 Source0:	https://www.sqlite.org/2026/sqlite-src-%{vnum}.zip
-# Source0-md5:	24ee761a5bbf4c4422efa164ae2a4b2e
+# Source0-md5:	961b50a676932f70a949f948d4cd093e
 URL:		https://www.sqlite.org/
 BuildRequires:	autoconf >= 2.50
 BuildRequires:	automake
@@ -51,7 +52,7 @@ BuildRequires:	rpmbuild(macros) >= 1.527
 BuildRequires:	tcl
 %{?with_tcl:BuildRequires:	tcl-devel >= %{tclver}}
 BuildRequires:	unzip
-Requires:	%{name}-libs%{?_isa} = %{version}-%{release}
+Requires:	%{name}-libs%{?_isa} = %{epoch}:%{version}-%{release}
 %{?with_icu:Provides:	%{name}(icu) = %{version}}
 %{?with_load_extension:Provides:	%{name}(load_extension) = %{version}}
 %{?with_unlock_notify:Provides:	%{name}(unlock_notify) = %{version}}
@@ -103,7 +104,7 @@ Ten pakiet zawiera bibliotekę współdzieloną SQLite 3.
 Summary:	Header files for SQLite development
 Summary(pl.UTF-8):	Pliki nagłówkowe SQLite
 Group:		Development/Libraries
-Requires:	%{name}-libs%{?_isa} = %{version}-%{release}
+Requires:	%{name}-libs%{?_isa} = %{epoch}:%{version}-%{release}
 %if %{with unlock_notify}
 Provides:	%{name}-devel(unlock_notify) = %{version}
 %endif
@@ -149,7 +150,7 @@ używających biblioteki SQLite.
 Summary:	Static libraries for SQLite development
 Summary(pl.UTF-8):	Statyczne biblioteki SQLite
 Group:		Development/Libraries
-Requires:	%{name}-devel%{?_isa} = %{version}-%{release}
+Requires:	%{name}-devel%{?_isa} = %{epoch}:%{version}-%{release}
 %if %{with unclock_notify}
 Provides:	%{name}-static(unlock_notify)
 %endif
