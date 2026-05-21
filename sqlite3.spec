@@ -29,7 +29,8 @@
 %define		vnum	3530100
 %define		ver		%{lua:vn=rpm.expand("%vnum");v="";for i in string.gmatch(string.format("%08d", vn), "..") do v=v.."."..i:gsub("^0", "");end;v=v:gsub("^.",""):gsub("\.0$","");print(v)}
 
-%define		tclver		8.6
+%define		tclver		9.0
+%define		tclmajor	%{sub %{tclver} 1 1}
 Summary:	SQLite3 library
 Summary(pl.UTF-8):	Biblioteka SQLite3
 Name:		sqlite3
@@ -338,6 +339,6 @@ rm -rf $RPM_BUILD_ROOT
 %files -n tcl-%{name}
 %defattr(644,root,root,755)
 %dir %{_libdir}/tcl*/sqlite3
-%attr(755,root,root) %{_libdir}/tcl%{tclver}/sqlite3/libsqlite%{version}.so
+%attr(755,root,root) %{_libdir}/tcl%{tclver}/sqlite3/libtcl%{tclmajor}sqlite%{version}.so
 %{_libdir}/tcl%{tclver}/sqlite3/pkgIndex.tcl
 %endif
