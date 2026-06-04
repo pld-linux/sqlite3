@@ -29,8 +29,15 @@
 %define		vnum	3530100
 %define		ver		%{lua:vn=rpm.expand("%vnum");v="";for i in string.gmatch(string.format("%08d", vn), "..") do v=v.."."..i:gsub("^0", "");end;v=v:gsub("^.",""):gsub("\.0$","");print(v)}
 
-%define		tclver		9.0
+%if %{with tcl}
 %define		tclmajor	%{lua:m=rpm.expand("%tcl_version"):gsub("(%d+).*","%1");print(m)}
+%if "%tclmajor" == "8"
+%define		tcllibname	libsqlite%{version}
+%else
+%define		tcllibname	libtcl%{tclmajor}sqlite%{version}
+%endif
+%endif
+
 Summary:	SQLite3 library
 Summary(pl.UTF-8):	Biblioteka SQLite3
 Name:		sqlite3
@@ -51,7 +58,7 @@ BuildRequires:	libtool
 BuildRequires:	rpmbuild(macros) >= 1.527
 %{?with_load_extension:BuildRequires:	sed >= 4.0}
 BuildRequires:	tcl
-%{?with_tcl:BuildRequires:	tcl-devel >= %{tclver}}
+%{?with_tcl:BuildRequires:	tcl-devel >= 8.6}
 BuildRequires:	unzip
 Requires:	%{name}-libs%{?_isa} = %{epoch}:%{version}-%{release}
 %{?with_icu:Provides:	%{name}(icu) = %{version}}
@@ -339,6 +346,6 @@ rm -rf $RPM_BUILD_ROOT
 %files -n tcl-%{name}
 %defattr(644,root,root,755)
 %dir %{_libdir}/tcl*/sqlite3
-%attr(755,root,root) %{_libdir}/tcl%{tclver}/sqlite3/libtcl%{tclmajor}sqlite%{version}.so
-%{_libdir}/tcl%{tclver}/sqlite3/pkgIndex.tcl
+%attr(755,root,root) %{_libdir}/tcl%{tcl_version}/sqlite3/%{tcllibname}.so
+%{_libdir}/tcl%{tcl_version}/sqlite3/pkgIndex.tcl
 %endif
