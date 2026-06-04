@@ -30,7 +30,7 @@
 %define		ver		%{lua:vn=rpm.expand("%vnum");v="";for i in string.gmatch(string.format("%08d", vn), "..") do v=v.."."..i:gsub("^0", "");end;v=v:gsub("^.",""):gsub("\.0$","");print(v)}
 
 %define		tclver		9.0
-%define		tclmajor	%{sub %{tclver} 1 1}
+%define		tclmajor	%{lua:m=rpm.expand("%tcl_version"):gsub("(%d+).*","%1");print(m)}
 Summary:	SQLite3 library
 Summary(pl.UTF-8):	Biblioteka SQLite3
 Name:		sqlite3
