@@ -1,10 +1,8 @@
 # TODO:
-# - some tests fail with tcl8.5, it's tcl fault,
-#	if someone REALLY cares (s)he can look into it
 # - sqlite binary is linked statically with sqlite library
 #
 # Conditional build:
-%bcond_with	tests		# run tests
+%bcond_without	tests		# run tests
 %bcond_with	readline	# readline (GPL) instead of libedit
 %bcond_without	tcl		# Tcl extension
 %bcond_without	unlock_notify	# disable unlock notify API
@@ -12,10 +10,6 @@
 %bcond_with	icu		# ICU tokenizer support
 %bcond_without	json		# json functions
 %bcond_without	static_libs	# static library
-
-%ifarch %{x8664}
-%undefine	with_tests
-%endif
 
 # disabling tcl currently breaks making test target,
 # some hack in Makefile needs to be done
@@ -306,7 +300,9 @@ append-libs "-ldl"
 
 %{__make}
 
-%{?with_tests:LC_ALL=C %{__make} test}
+# "make test" is the heavy multi-config mdevtest; "testrunner" runs veryquick on our single build,
+# one process per test file (plain in-process veryquick leaks a global log callback -> spurious failures)
+%{?with_tests:LC_ALL=C %{__make} testrunner}
 
 %install
 rm -rf $RPM_BUILD_ROOT
