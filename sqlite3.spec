@@ -7,7 +7,6 @@
 %bcond_with	tests		# run tests
 %bcond_with	readline	# readline (GPL) instead of libedit
 %bcond_without	tcl		# Tcl extension
-%bcond_without	doc		# disable documentation building
 %bcond_without	unlock_notify	# disable unlock notify API
 %bcond_without	load_extension	# enable load extension API
 %bcond_with	icu		# ICU tokenizer support
@@ -26,7 +25,7 @@
 
 # sqlite3 version with zero padded without any dots (3 08 10 01 is 3.8.10.1)
 # but trailing 00 means no 4rd part (3 11 01 00 is 3.11.1)
-%define		vnum	3530200
+%define		vnum	3530300
 %define		ver		%{lua:vn=rpm.expand("%vnum");v="";for i in string.gmatch(string.format("%08d", vn), "..") do v=v.."."..i:gsub("^0", "");end;v=v:gsub("^.",""):gsub("\.0$","");print(v)}
 
 %if %{with tcl}
@@ -48,7 +47,9 @@ License:	Public Domain
 Group:		Libraries
 # Source0Download: http://www.sqlite.org/download.html
 Source0:	https://www.sqlite.org/2026/sqlite-src-%{vnum}.zip
-# Source0-md5:	8a38762ac64f6b7881d794e98cd28d20
+# Source0-md5:	a74e73f26210574d6912faca67459f0e
+Source1:	https://www.sqlite.org/2026/sqlite-doc-%{vnum}.zip
+# Source1-md5:	95375cd647d3bd8bc45b4bb49168198f
 URL:		https://www.sqlite.org/
 BuildRequires:	autoconf >= 2.50
 BuildRequires:	automake
@@ -206,10 +207,23 @@ sqlite3 tcl extension.
 %description -n tcl-%{name} -l pl.UTF-8
 Rozszerzenie sqlite3 dla Tcl.
 
-%prep
-%setup -q -n sqlite-src-%{vnum}
+%package doc
+Summary:	SQLite documentation (HTML)
+Summary(pl.UTF-8):	Dokumentacja SQLite (HTML)
+Group:		Documentation
+BuildArch:	noarch
 
-%{__sed} -i 's/mkdir doc/#mkdir doc/' Makefile.in
+%description doc
+SQLite documentation as a set of static HTML pages, the same content
+published on the SQLite website.
+
+%description doc -l pl.UTF-8
+Dokumentacja SQLite w postaci zestawu statycznych stron HTML - ta sama
+treść, która jest publikowana na stronie SQLite.
+
+%prep
+%setup -q -a 1 -n sqlite-src-%{vnum}
+%{__mv} sqlite-doc-%{vnum} html
 
 if [ "$(cat VERSION)" != "%{version}" ]; then
 	echo "Tarball content doesn't match version %{version}." >&2
@@ -292,10 +306,6 @@ append-libs "-ldl"
 
 %{__make}
 
-%if %{with doc}
-%{__make} doc
-%endif
-
 %{?with_tests:LC_ALL=C %{__make} test}
 
 %install
@@ -349,3 +359,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/tcl%{tcl_version}/sqlite3/%{tcllibname}.so
 %{_libdir}/tcl%{tcl_version}/sqlite3/pkgIndex.tcl
 %endif
+
+%files doc
+%defattr(644,root,root,755)
+%doc html
