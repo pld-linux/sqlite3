@@ -3,7 +3,7 @@
 #
 # Conditional build:
 %bcond_without	tests		# run tests
-%bcond_with	readline	# readline (GPL) instead of libedit
+%bcond_without	readline	# readline (GPL) instead of libedit
 %bcond_without	tcl		# Tcl extension
 %bcond_without	unlock_notify	# disable unlock notify API
 %bcond_without	load_extension	# enable load extension API
@@ -39,19 +39,15 @@ Release:	1
 Epoch:		1
 License:	Public Domain
 Group:		Libraries
-# Source0Download: http://www.sqlite.org/download.html
+# Source0Download: https://www.sqlite.org/download.html
 Source0:	https://www.sqlite.org/2026/sqlite-src-%{vnum}.zip
 # Source0-md5:	cb0abcc6b1e0e89f0d40158919a64502
 Source1:	https://www.sqlite.org/2026/sqlite-doc-%{vnum}.zip
 # Source1-md5:	a9c7752def703924cfb8608432ac252b
 URL:		https://www.sqlite.org/
-BuildRequires:	autoconf >= 2.50
-BuildRequires:	automake
 %{!?with_readline:BuildRequires:	libedit-devel}
-BuildRequires:	libtool
 %{?with_readline:BuildRequires:	readline-devel}
 BuildRequires:	rpmbuild(macros) >= 1.527
-%{?with_load_extension:BuildRequires:	sed >= 4.0}
 BuildRequires:	tcl
 %{?with_tcl:BuildRequires:	tcl-devel >= 8.6}
 BuildRequires:	unzip
@@ -154,7 +150,7 @@ Summary:	Static libraries for SQLite development
 Summary(pl.UTF-8):	Statyczne biblioteki SQLite
 Group:		Development/Libraries
 Requires:	%{name}-devel%{?_isa} = %{epoch}:%{version}-%{release}
-%if %{with unclock_notify}
+%if %{with unlock_notify}
 Provides:	%{name}-static(unlock_notify)
 %endif
 %if %{with load_extension}
@@ -290,7 +286,8 @@ append-libs "-ldl"
 
 %configure \
 	--soname=legacy \
-	%{?with_readline:--disable-editline} \
+	--disable-rpath \
+	%{?with_readline:--enable-readline --disable-editline}%{!?with_readline:--editline} \
 	%{!?with_tcl:--disable-tcl}%{?with_tcl:--with-tcl=%{_ulibdir}} \
 	%{__enable_disable load_extension load-extension} \
 	%{__enable_disable json} \
