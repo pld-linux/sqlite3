@@ -45,12 +45,14 @@ Source0:	https://www.sqlite.org/2026/sqlite-src-%{vnum}.zip
 Source1:	https://www.sqlite.org/2026/sqlite-doc-%{vnum}.zip
 # Source1-md5:	f6dfc9d04e7c837ab03a5bb28b3cce9b
 URL:		https://www.sqlite.org/
+%{?with_icu:BuildRequires:	libicu-devel}
 %{!?with_readline:BuildRequires:	libedit-devel}
 %{?with_readline:BuildRequires:	readline-devel}
 BuildRequires:	rpmbuild(macros) >= 1.527
 BuildRequires:	tcl
 %{?with_tcl:BuildRequires:	tcl-devel >= 8.6}
 BuildRequires:	unzip
+BuildRequires:	zlib-devel
 Requires:	%{name}-libs%{?_isa} = %{epoch}:%{version}-%{release}
 %{?with_icu:Provides:	%{name}(icu) = %{version}}
 %{?with_load_extension:Provides:	%{name}(load_extension) = %{version}}
